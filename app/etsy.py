@@ -1,4 +1,4 @@
-from flask import Blueprint, g, url_for, redirect, session, request, flash
+from flask import Blueprint, g, url_for, redirect, session, request, flash, render_template
 from flaskext.oauth import OAuth
 
 from app import main
@@ -128,12 +128,13 @@ def get_shop(userid=None, shopid=None):
 
 @etsy.route('/test')
 def test():
-    return getShopReceipts()
+    shop_data = getShopReceipts()
+    return render_template('shops.html', stores=shop_data)
 
 def getShopReceipts():
     shops = get_shops()
     i = 0
-    numShops = shops['count']
+    numShops = shops.get('count')
 
     shopList = dict()
 
@@ -144,29 +145,34 @@ def getShopReceipts():
         owner_id = s.get('user_id')
         owner_login = s.get('login_name')
         shop_receipts = getReceiptsForShop(shop_id)
-        numReceipts = shop_receipts['count']
+        numReceipts = shop_receipts.get('count')
 
         shop_customers = dict()
+        for j in shop_receipts:
+            print j
+
         for j in range(0, numReceipts):
-            customer_id = shop_receipts[j].get('buyer_user_id')
+            sr =  shop_receipts['results'][j];
+            customer_id = sr.get('buyer_user_id')
             if customer_id in shop_customers:
-                shop_costomers[customer_id]['sum'] += shop_receipts[j].get('total_price')
-                shop_costomers[customer_id]['num_orders'] += 1
+                shop_customers[customer_id]['sum'] += float(sr.get('total_price'))
+                shop_customers[customer_id]['num_orders'] += 1
             else:
-                shop_costumers[customer_id] = dict()
-                shop_costomers[customer_id]['name'] = shop_receipts[j].get('name')
-                shop_costomers[customer_id]['email'] = shop_receipts[j].get('email')
+                print customer_id
+                shop_customers[customer_id] = dict()
+                shop_customers[customer_id]['name'] = sr.get('name')
+                shop_customers[customer_id]['email'] = sr.get('email')
 
-                shop_costomers[customer_id]['address'] = dict()
-                shop_costomers[customer_id]['address']['first_line'] = shop_receipts[j].get('first_line')
-                shop_costomers[customer_id]['address']['second_line'] = shop_receipts[j].get('second_line')
-                shop_costomers[customer_id]['address']['city'] = shop_receipts[j].get('city')
-                shop_costomers[customer_id]['address']['state'] = shop_receipts[j].get('state')
-                shop_costomers[customer_id]['address']['zip'] = shop_receipts[j].get('zip')
-                shop_costomers[customer_id]['address']['country'] = shop_receipts[j].get('country_id')
+                shop_customers[customer_id]['address'] = dict()
+                shop_customers[customer_id]['address']['first_line'] = sr.get('first_line')
+                shop_customers[customer_id]['address']['second_line'] = sr.get('second_line')
+                shop_customers[customer_id]['address']['city'] = sr.get('city')
+                shop_customers[customer_id]['address']['state'] = sr.get('state')
+                shop_customers[customer_id]['address']['zip'] = sr.get('zip')
+                shop_customers[customer_id]['address']['country'] = sr.get('country_id')
 
-                shop_costomers[customer_id]['sum'] = shop_receipts[j].get('total_price')
-                shop_costomers[customer_id]['num_orders'] = 1
+                shop_customers[customer_id]['sum'] = float(sr.get('total_price'))
+                shop_customers[customer_id]['num_orders'] = 1
 
         shopList[shop_id] = dict()
         shopList[shop_id]['shop_name'] = shop_name
@@ -175,7 +181,7 @@ def getShopReceipts():
         shopList[shop_id]['owner_login'] = owner_login
         shopList[shop_id]['shop_customers'] = shop_customers
 
-    return str(shopList)
+    return shopList
 
 def getReceiptsForShop(shopid=None):
     if shopid is None: return None
