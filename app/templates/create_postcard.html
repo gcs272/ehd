@@ -236,18 +236,18 @@
 					$(".drop-region").remove();
 					var data = getData();
 				
-					var length = data.layout.x * data.layout.y;
+					var length = data.layout_x * data.layout_y;
 
 					var width = $(".preview-padding").outerWidth();
 					var height = $(".preview-padding").outerHeight();
 					var offset = $(".preview-padding").offset();
 
-					for( var x = 0; x < data.layout.x; x++ ) {
-						for( var y = 0; y < data.layout.y; y++) {
-							var left = offset.left + (width/data.layout.x * x)
-							var top = offset.top + (height/data.layout.y * y)
-							var w = width / data.layout.x
-							var h = height / data.layout.y
+					for( var x = 0; x < data.layout_x; x++ ) {
+						for( var y = 0; y < data.layout_y; y++) {
+							var left = offset.left + (width/data.layout_x * x)
+							var top = offset.top + (height/data.layout_y * y)
+							var w = width / data.layout_x
+							var h = height / data.layout_y
 
 							$region = $("<div class='drop-region'></div>")
 	
@@ -272,11 +272,19 @@
 							})
 							
 							$(this).html(img)
+							image_dropped();
 							return false;
 						}
 					})
 						
 					
+				}
+
+				function image_dropped() {
+					payload = getData();
+					$.post('/image/generate', payload, function(resp) {
+						console.log(resp);
+					});
 				}
 
 				function getData() {
@@ -288,35 +296,37 @@
 					var avatarSrc = images.avatar;
 					var bannerSrc = images.banner;
 					var bannerPlacement = $(".banner-place.active").data('banner');
-					var imgs = $(".drop-region")
+					var imgs = $(".drop-region img")
 					var imgArr = [];
 
-					for( var i = 0; i < imgs.length; i++ ) {
-						console.log(imgs[i])
+					/* for( var i = 0; i < imgs.length; i++ ) {
+						console.log(imgs[i]);
 						var im = $(imgs[i]).find('img');
 						imgArr.push({
 							src: ( im ? im.attr('src') : null ),
 							position: $(imgs[i]).data('position')
 						})
+					} */
+
+					var image_list = [];
+					for (var i = 0; i < imgs.length; i++) {
+						image_list.push(imgs[i].src);
 					}
 
 					var payload = {
-						layout: layout,
+						layout_x: layout['x'],
+						layout_y: layout['y'],
 						background: bgColor,
 						avatar: avatarSrc,
-						banner: {
+						banner: JSON.stringify({
 							src: bannerSrc,
 							placement: bannerPlacement,
 							showBanner: $("#banner-hide").is(':checked')
-						},
-						images: imgArr
+						}),
+						images: JSON.stringify(image_list)
 					}
 
-					console.log(imgArr)
-
 					return payload
-					//take it to greg
-
 				}
 
 				a = getData;
@@ -338,7 +348,7 @@
 						$(".slider-img").draggable({revert: "valid"})
 					}
 				})
-			})
-		</script>
+			});
+</script>
 		
 {% endblock %}

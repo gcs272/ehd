@@ -3,10 +3,14 @@
 from flask import Flask, redirect, url_for, session, request, g,\
         render_template
 
+from lib.postcard import Postcard
+
+import requests
 import stripe
 import json
 import uuid
 import os
+import hashlib
 
 main = Flask(__name__)
 main.config.from_pyfile('config/development.cfg')
@@ -42,13 +46,15 @@ def checkout():
 
 @main.route('/image/generate', methods=['POST'])
 def generate():
+    print request.form
+    print request.form.get('images')
     # Grab the list of urls being posted and start downloading them
     card = Postcard()
     for url in json.loads(request.form.get('images')):
         card.add_image(download_image(url))
 
-    grid_x = int(request.form.get('grid_x'))
-    grid_y = int(request.form.get('grid_y'))
+    grid_x = int(request.form.get('layout_x'))
+    grid_y = int(request.form.get('layout_y'))
 
     card.generate_grid((grid_x, grid_y))
 
@@ -73,8 +79,9 @@ def hooray():
     return render_template('hooray.html')
 
 def download_image(url):
+    print 'downloading: %s' % (url)
     path = '/tmp/%s.jpg' % (hashlib.sha1(url).hexdigest())
-    if os.path.exists(path):
+    if not os.path.exists(path):
         res = requests.get(url)
         fp = open(path, 'wb')
         fp.write(res.content)

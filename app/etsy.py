@@ -1,6 +1,5 @@
 from flask import Blueprint, g, url_for, redirect, session, request, flash, render_template, jsonify
 from flaskext.oauth import OAuth
-
 from app import main
 
 etsy = Blueprint('etsy', __name__)
