@@ -252,21 +252,6 @@ input#s, input[type=text], select, textarea {
 	text-transform: capitalize;
 }
 
-.postcard-info #email_input label{
-	position: absolute;
-	color: #CCC;
-	background: #FBFBFB;
-	z-index: 5;
-	width: 85px;
-	text-align: right;
-	display: block;
-	margin: 16px;
-	font-size: 13px;
-	font-weight: bold;
-	color: #555;
-	text-transform: capitalize;
-}
-
 
 textarea{
 	width:100%;
@@ -330,7 +315,6 @@ a:hover {
 
 .header p a{
 	color: #FFFFFF;
-	float:left;
 	font-family: "museo-slab-1","museo-slab-2",'Georgia',serif;
 	font-style: italic;
 	font-weight: 100;
@@ -2476,7 +2460,7 @@ p.comment-form-comment {
 ----------------------------------------------- */
 #container{width: 960px;margin: 0 auto;}
 #container h4{font-size:25px;text-indent: 15px;margin: 0px 0 30px;}
-#background-front{background: url('images/background-front.jpg') center 40px;background-size: cover;width: 100%;height:600px;background-repeat: no-repeat;}
+#background-front{background: url('images/background-front.jpeg') center 40px;background-size: cover;width: 100%;height:600px;background-repeat: no-repeat;}
 
 #login-top{float:right;width: 189px;height: 162px;margin: 0 auto;display: block;background: url('images/login_bg.png') 0 center no-repeat;text-align: center;}
 #login-top-padding{width:960px;margin:0 auto;}
@@ -2514,7 +2498,7 @@ body{}
 
 #front-content-inside #front-bottom{width: 560px;margin: 0 auto;}
 
-#front-content-inside p{margin-bottom:10px;}
+#front-content-inside p{margin-bottom:10px;text-indent:10px;}
 #front-content-inside h4{font-size:50px;}
 
 .instruction-image-title{margin:10px 0 0 0;font-size:20px;color:#FA5559;font-family: "museo-slab-1","museo-slab-2",'Georgia',serif;font-style: italic;}
@@ -2523,7 +2507,7 @@ body{}
 
 
 .postcard-title, .grid-image-title{padding:180px 0 0 0;}
-.grid-image-title{font-size:20px;}
+
 .image1{
 	position:absolute;
 	cursor:pointer;
@@ -2546,8 +2530,7 @@ body{}
 .circle-one{float:left;margin: 0px 100px 20px 0;}
 .circle-one h2{font-weight:bold;font-size:40px;text-align:center;}
 
-footer .divider{background: url('images/divider.jpg') no-repeat center;height: 38px;color: white;letter-spacing: .2em;padding-top: 15px;margin: 30px 0px 15px;text-align: center;}
-.divider{background: url('images/divider2.jpg') no-repeat center;height: 3px;color: white;letter-spacing: .2em;padding-top: 15px;margin: 30px 0px 15px;text-align: center;}
+.divider{background: url('images/divider.jpg') no-repeat center;height: 38px;color: white;letter-spacing: .2em;padding-top: 15px;margin: 30px 0px 15px;text-align: center;}
 form .divider{margin:25px auto;}
 .headline{height:25px;line-height: 25px;margin-bottom:15px;}
 .headline h1{font-size:25px;font-weight:bold;}
@@ -2600,9 +2583,7 @@ ul#grid-wrap .grid-right{margin: 15px 0px 15px 15px;}
 .dual{float:left;width:50%}
 h5{float:left;margin:15px;clear:both;}
 #submit-btn-content button{background: #FA5559;border-radius: 15px;border: 0px;cursor: pointer;height: 60px;padding: 0 10px;;margin:10px auto;opacity: 0.89;}
-#submit-btn-content b{font-size:25px;color:white;text-transform: uppercase;}
-#back-btn button{border-radius: 15px;border: 0px;cursor: pointer;height: 60px;padding: 0 10px;;margin:10px auto;opacity: 0.89;}
-#back-btn b{font-size:25px;color:white;text-transform: uppercase;}
+#submit-btn-content b{font-size:25px;color:white;}
 
 
 /* =Request
@@ -2637,9 +2618,8 @@ footer h1{font-size: 25px;font-weight: bold;}
 ----------------------------------------------- */
 .template-content-header{margin: 50px auto 0;width: 960px;}
 .template-content{margin: 0px auto 0;width: 960px;border: 2px solid;clear: both;}
-.filter-template-content{margin: 0px auto 0;width: 960px;clear: both;}
-.template-content .left{width: 220px;float:left;margin-left:10px;}
-.template-content .right{width: 710px;float: left;border: 10px solid black;background: black;margin: auto 0;}
+.template-content .left{width: 219px;float:left;margin-left:10px; border-right: 1px solid #ccc;}
+.template-content .right{width: 710px;float: left;border: 10px solid black;background: black;margin: auto 0; text-align: center;}
 .template-content h3{padding:15px 0 5px;font-size:20px;}
 .layout-tile{margin:10px 0 0 0;}
 .do_not_include{padding:15px 0 0;}
@@ -2647,62 +2627,4 @@ footer h1{font-size: 25px;font-weight: bold;}
 .do_not_include p{float:left;}
 .do_not_include input{float:left;width:auto;margin: 7px 10px 0 0px;}
 .background-tile{float:left;margin-right:10px;}
-.add-message{margin: 20px auto 0;width: 960px;clear: both;}
-
-.font-tile h4{font-weight:normal;text-indent:10px;}
-.serif{font-family:serif;}
-.san-serif{font-family:sans-serif;}
-.bold{font-weight:bold;}
-.cursive{font-family:cursive;}
-.typewriter{font-family:Lucida Sans Typewriter;}
-
-.font-tile h4{font-weight:normal;text-indent:10px;}
-.small{font-size:15px;}
-.normal{font-size:20px;}
-.large{font-size:25px;}
-
-.color-tile{float:left;margin-right:10px;margin-top:10px;}
-
-.message-padding{padding:10px;background:white;}
-.stamp{float:right;}
-.message-box{float:left;border:1px solid;width: 350px;height: 300px;margin: -20px 20px 20px 20px;}
-.message-box p{padding:10px;}
-.message-address{float:left;margin: 75px 0px 0 55px;}
-.message-address p{margin-bottom:5px;}
-.message-headshot{clear:both;margin:20px;}
-
-.filter-header{border: 2px solid;}
-.filter-customers{text-indent:10px;}
-.filter-customers-title{background:black;color:white;font-size:20px;}
-.filter-row{margin:10px 0;clear:both;}
-.filter-row h5{font-weight:bold;line-height: 15px;margin: 15px 0;}
-.filter-row p{margin:10px auto;}
-.filter-block{border:1px solid;float:left;margin: 10px 8px 10px 0;width:175px;text-align:center;border-radius: 10px;}
-.filter-selection{border:0;width:200px;font-size:20px;}
-.filter-active{background: #FA5559;;color:white;font-style: italic;}
-.filter-column{float:left;border:1px solid;}
-.filter-column h6{float:left;margin-right:10px;}
-.filter-column img{float:left;}
-
-.card-template-content{margin: 50px auto 0;width: 960px;}
-.card-template-content .right{width:218px;float:right;border:1px solid;}
-.card-template-content h3{font-size:20px;font-weight:bold;padding: 15px 0;}
-.card-template-content .right-layout{text-indent: 10px;}
-.payment-tile{padding:20px 0;}
-.final-payment-tile{background:#9cd8e0;color:black;font-size:20px;}
-.card-block{float:left;text-indent: 10px;width: 348px;border: 1px solid;margin-right:20px;}
-.postcard-info p{float:left;margin: 10px 0 0;}
-.postcard-info .active{background: #FA5559;;color:white;font-style: italic;}
-.postcard-select, .email-select{margin:10px;}
-
-.preview h3 span{text-decoration:underline;font-size:15px;margin-left:10px;text-transform:uppercase;}
-.arrow-down {width: 0; height: 0; border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 5px solid #fff;float: right;margin: 20px 0 0 10px;}
-
-.thank-template-content{margin: 50px auto 0;width: 960px;}
-.thank-template-content h3{font-size:20px;font-weight:bold;padding: 15px 0;}
-.thank-template-content-header{margin: 30px auto 0;width: 960px;}
-.share_fb{width: 700px;text-indent: 10px;padding: 10px;background: #9CD8E0;color: black;}
-.order_num{margin: 30px 0 0 0;background: #FA5559;color: white;text-indent: 10px;width: 700px;padding: 10px;}
-.order_num p{float:left;margin:10px 0;width: 350px;}
-.postcard-info-padding label{margin: 13px 15px !important;}
-.postcard-info-padding input{font-size:15px;}
+.add-message{margin: 0px auto 0;width: 960px;clear: both;}

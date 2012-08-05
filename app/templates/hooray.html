@@ -1,6 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
-<div style='margin-top: 64px auto; width: 960px; padding-top: 80px; text-align: center; height: 600px;'>
-	<p>Thanks for sending with Postback!</p>
-</div>
+<div id="container-front">
+	
+	<!-- Front Page -->
+	
+
+
+	
+
+		<div class="clear"></div>
+
+		
+		<div class="spacer"></div>
+		<div class="thank-template-content-header">
+			<div id="front-content-bottom-color">
+		
+			<div class="headline">
+			<h1>Thank you! Your order has been completed successfully.</h1>
+			<p>You should receive an email confirming your order shortly. If you have questions or want to make changes to your order, you can do so on your account. Feel free to print this page and keep for your records.</p>
+			</div>
+		
+		
+		
+		
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		<div class="divider" style="margin:50px 0 15px 0"></div>
+		</div>
+		
+		<div class="thank-template-content">
+			<div class="share_fb">
+				<div class="info" style="float:left;width:450px">
+					<h3>Share your card</h3>
+					<p>Spread the word and attract new customers to your shop!</p>
+				</div>
+				<img src="images/facebook.png" width="90px" height="90px" style="margin-right:20px">
+				<img src="images/twitter.png" width="90px" height="90px">
+			</div>
+			
+			<div class="clear"></div>
+			
+			<div class="order_num">
+				<div class="info" style="float:left;width:450px">
+					<h3>Order: #<span>123456</span></h3>
+				</div>
+				<p>Bill To:</p>
+				<p>AMEX: ***** 1234, EXP: 05/16</p>
+				<p>Royal Tenenabum</p>
+				<p>10010</p>
+				<p>10 Cards @ $1.90</p>
+				<p>Order Total $19.90</p>
+				<div class="clear"></div>
+			</div>
+	
+				<div class="clear"></div>
+
+				<div class="preview">
+					<h3>Your Card</h3> 
+					<img style="-webkit-user-select: none;width:350px;margin-right:20px" src="http://www.southpolestation.com/postcard/cp76back.jpg">
+					<img style="-webkit-user-select: none;width:350px;" src="http://images.uprinting.com/article_pages/postcard-design-designers-01.jpg">
+				</div>
+		</div>
+
+		<div class="clear"></div>
+		
+		<div class="add-message">
+			<div id="submit-btn-content" style="float:right">
+				<form action="{{url_for('create_postcard')}}" method="get"> <button type="submit" name="button" id="button" value="Send"><b>Make Another Card >></b></button></form>
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		
 {% endblock %}
