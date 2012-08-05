@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<style>
+	.image2 {
+	margin-left: 0px;
+	width: 300px;
+	display: inline-block;
+	}
+	</style>
 	<!-- Header -->
 
 
@@ -129,21 +135,21 @@
 				</div>
 				<ul id="grid-wrap" class="grid-home">
 					<li class="grid-left grid-item"> 
-						<img class="image1" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
-					  <img class="image2" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
-						<div class="grid-image-title">Handcraft</div>
+						<img class="image1" src="{{url_for('static', filename='img/postcard1x1.png')}}" />
+					  	<img class="image2" src="{{url_for('static', filename='img/postcard.png')}}" />
+						<div class="grid-image-title">1x1</div>
 					</li>
 					
 					<li> 
-						<img class="image1" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
-					  <img class="image2" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
-						<div class="grid-image-title">Vintage</div>
+						<img class="image1" src="{{url_for('static', filename='img/postcard4x4.png')}}" />
+					  <img class="image2" src="{{url_for('static', filename='img/postcard.png')}}" />
+						<div class="grid-image-title">2x2</div>
 					</li>
 					
 					<li class="grid-right grid-item"> 
-						<img class="image1" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
-					  <img class="image2" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
-						<div class="grid-image-title">Blue Ocean</div>
+						<img class="image1" src="{{url_for('static', filename='img/postcard3x3.png')}}" />
+					  <img class="image2" src="{{url_for('static', filename='img/postcard.png')}}" />
+						<div class="grid-image-title">3x3</div>
 					</li>
 				</ul>
 
