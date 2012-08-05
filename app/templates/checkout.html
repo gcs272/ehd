@@ -3,20 +3,28 @@
 <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 {% endblock %}
 {% block content %}
-<form id='payment-form' action='#' method='post'>
-	<span class='error payment-errors' />
-	
-	<label for='card-number'>Card Number</label>
-	<input type='text' class='card-number' />
+<div class='container'>
+	<p class='num-cards'>
+		{{ addresses|length }}
+	</p>
+	<p class='message'>
+		{{ message }}
+	</p>
+	<form id='payment-form' action='#' method='post'>
+		<span class='error payment-errors' />
+		
+		<label for='card-number'>Card Number</label>
+		<input type='text' class='card-number' />
 
-	<label for='card-cvc'>CVV Code</label>
-	<input type='text' class='card-cvc' />
+		<label for='card-cvc'>CVV Code</label>
+		<input type='text' class='card-cvc' />
 
-	<label for='card-expiry-month'>Expiration Date</label>
-	<input type='text' class='card-expiry-month' placeholder='MM' />
-	<input type='text' class='card-expiry-year' placeholder='YY' />
-	<input type='submit' class='submit-button' value='Finish' />
-</form>
+		<label for='card-expiry-month'>Expiration Date</label>
+		<input type='text' class='card-expiry-month' placeholder='MM' />
+		<input type='text' class='card-expiry-year' placeholder='YY' />
+		<input type='submit' class='submit-button' value='Finish' />
+	</form>
+</div>
 <script type='text/javascript'>
 Stripe.setPublishableKey('pk_07a3wApPn31k25MBWZgXxyTUPyR4U');
 

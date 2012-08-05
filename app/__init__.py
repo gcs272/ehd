@@ -30,6 +30,14 @@ def create_postcard():
 def add_recipients():
     return render_template('recipients.html')
 
+@main.route('/checkout', methods=['POST'])
+def checkout_form():
+    addresses = json.loads(request.form.get('addresses'))
+    message = request.form.get('message')
+
+    return render_template('checkout.html', addresses=addresses, 
+            message=message)
+
 @main.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     if request.method == 'POST':

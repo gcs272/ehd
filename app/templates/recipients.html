@@ -41,9 +41,11 @@
 	</div>
 
 	<div id='submit-btn-content' style='float: right'>
-		<button type='submit'>
-			<b>Enter Payment Details</b>
-		</button>
+		<form id='recipients-form' action='/checkout' method='post'>
+			<button type='submit' id='submit-button'>
+				<b>Enter Payment Details</b>
+			</button>
+		</form>
 	</div>
 </div>
 
@@ -55,7 +57,7 @@
 				address = JSON.stringify(customer);
 				markup = $("<li><input type='checkbox' data-address='" + address + "' />" +
 					customer.name +
-					"<span class='float: right;'>$" + customer.sum + "</span></li>");
+					"<span class='display: inline-block; float: right;'>$" + customer.sum + "</span></li>");
 
 				$('#users').append(markup);
 		});
@@ -73,6 +75,25 @@
 				load_customers(users);
 			});
 
+			addresses = []
+			$('#submit-button').click(function() {
+				elements = $('input:checked');
+				elements.each(function(index) {
+					addresses.push($(elements[index]).data('address'));
+				});
+
+				input = document.createElement('input');	
+				input.type = 'hidden';
+				input.name = 'addresses';
+				input.value = JSON.stringify(addresses);
+				$('#recipients-form').append(input);
+
+				minput = document.createElement('input');
+				minput.type = 'hidden';
+				minput.name = 'message';
+				minput.value = $('#message').val();
+				$('#recipients-form').append(minput);
+			});
 	});
 </script>
 {% endblock %}
