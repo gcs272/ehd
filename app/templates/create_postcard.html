@@ -309,6 +309,9 @@
 					
 					var bgColor = $(".background-swatch.active").find('.background-color').css('background-color')
 
+					console.log('images: ');
+					console.log(images);
+
 					var avatarSrc = images.avatar;
 					var bannerSrc = images.banner;
 					var bannerPlacement = $(".banner-place.active").data('banner');
@@ -341,7 +344,7 @@
 						banner: JSON.stringify({
 							src: bannerSrc,
 							placement: bannerPlacement,
-							showBanner: $("#banner-hide").is(':checked')
+							showBanner: !$("#banner-hide").is(':checked')
 						}),
 						images: JSON.stringify(image_list)
 					}

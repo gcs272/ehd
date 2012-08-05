@@ -61,6 +61,7 @@ def generate():
     # Shorten to just what we actually need
     urls = urls[0:grid_x*grid_y]
     
+    print request.form.get('banner')
 
     for url in urls:
         card.add_image(download_image(url))

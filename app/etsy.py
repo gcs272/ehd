@@ -169,7 +169,7 @@ def get_listing_image(listingid=None, imageid=None):
 
 @etsy.route('/images')
 def get_images():
-    return jsonify(images=getImagesForShop())
+    return jsonify(getImagesForShop())
 
 @etsy.route('/store')
 def test():
@@ -244,7 +244,7 @@ def getImagesForShop(shopid=None):
     results = dict()
     results['banner'] = shop_data['image_url_760x100'];
     results['avatar'] = get_avatar()['results']['src'];
-    results['images'] = list()
+    results['images'] = []
     listings = get_shop_listings(shop_data['shop_id'])
     numListings = listings['count']
     listings = listings['results']
@@ -255,7 +255,8 @@ def getImagesForShop(shopid=None):
         for image in images['results']:
             urls.append(image['url_fullxfull'])
 
-    return urls
+    results['images'] = urls
+    return results
 
 ### utility routes ###
 @api.tokengetter
