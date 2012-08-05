@@ -57,7 +57,7 @@
 				address = JSON.stringify(customer);
 				markup = $("<li><input type='checkbox' data-address='" + address + "' />" +
 					customer.name +
-					"<span class='display: inline-block; float: right;'>$" + customer.sum + "</span></li>");
+					"<span style='display: inline-block; float: right;'>$" + customer.sum + "</span></li>");
 
 				$('#users').append(markup);
 		});
