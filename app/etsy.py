@@ -170,7 +170,7 @@ def get_listing_image(listingid=None, imageid=None):
 
 @etsy.route('/images')
 def get_images():
-    return jsonify(getImagesForShop())
+    return jsonify(images=getImagesForShop())
 
 @etsy.route('/store')
 def test():
@@ -250,16 +250,14 @@ def getImagesForShop(shopid=None):
     numListings = listings['count']
     listings = listings['results']
 
-    for i in range(0, numListings):
-        listing_id = listings[i]['listing_id']
-        images = get_listing_images(listing_id)
-        numImages = images['count']
-        images = images['results']
-        
-        for j in range(0, numImages):
-            results['images'].append(images[j]['url_fullxfull'])
-    
-    return results
+    urls = []
+    for listing in listings:
+        images = get_listing_images(listing['listing_id'])
+        for image in images['results']:
+            urls.append(image['url_fullxfull'])
+
+    return urls
+
 ### utility routes ###
 @api.tokengetter
 def get_token():
