@@ -129,10 +129,12 @@ def get_shop(userid=None, shopid=None):
 @etsy.route('/test')
 def test():
     shop_data = getShopReceipts()
-    return render_template('shops.html', stores=shop_data)
+    print shop_data
+    return render_template('etsy/shops.html', stores=shop_data)
 
 def getShopReceipts():
     shops = get_shops()
+    
     i = 0
     numShops = shops.get('count')
 
@@ -148,8 +150,6 @@ def getShopReceipts():
         numReceipts = shop_receipts.get('count')
 
         shop_customers = dict()
-        for j in shop_receipts:
-            print j
 
         for j in range(0, numReceipts):
             sr =  shop_receipts['results'][j];
@@ -158,7 +158,6 @@ def getShopReceipts():
                 shop_customers[customer_id]['sum'] += float(sr.get('total_price'))
                 shop_customers[customer_id]['num_orders'] += 1
             else:
-                print customer_id
                 shop_customers[customer_id] = dict()
                 shop_customers[customer_id]['name'] = sr.get('name')
                 shop_customers[customer_id]['email'] = sr.get('email')
@@ -187,7 +186,7 @@ def getReceiptsForShop(shopid=None):
     if shopid is None: return None
 
     resp = api.get('http://openapi.etsy.com/v2/shops/'+str(shopid)+'/receipts/')
-    print resp
+
     if resp.status == 200:
         data = resp.data
     else:
