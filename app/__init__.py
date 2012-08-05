@@ -36,7 +36,7 @@ def checkout_form():
     message = request.form.get('message')
 
     return render_template('checkout.html', addresses=addresses, 
-            message=message)
+            message=message, total_cost = 1.99 * len(addresses))
 
 @main.route('/checkout', methods=['GET', 'POST'])
 def checkout():
@@ -101,7 +101,7 @@ def preview():
     response.headers['Content-Type'] = 'image/jpeg'
     return response
 
-@main.route('/hooray')
+@main.route('/hooray', methods=['POST'])
 def hooray():
     return render_template('hooray.html')
 
