@@ -197,9 +197,11 @@
 		<div class="clear"></div>
 		
 		<div class="add-message">
+			<form action='/recipients' method='GET'>
 			<div id="submit-btn-content" style="float:right">
 							<button type="submit" name="button" id="button" value="Send"><b>Add Message &gt;&gt;</b></button>
 			</div>
+			</form>
 		</div>
 		
 		<div class="clear"></div>
@@ -212,7 +214,13 @@
 					$(this).addClass('active');
 					generate_preview();
 				});
-				/*$(".layout-tile").click(function(){
+
+				/* $('.background-swatch').click(function() {
+					$('.layout-tile.active').removeClass('active');
+					$(this).addClass('active')
+					generate_preview();
+				});
+				$(".layout-tile").click(function(){
 					$(".layout-tile.active").removeClass('active');
 					$(this).addClass('active')
 					generate_preview();
@@ -243,6 +251,17 @@
 				$(".slider-img").on('click', function(e) {
 					e.preventDefault();
 				})*/
+
+				$("#banner-hide").on('change', function(e){
+					if( $("#banner-hide").is(':checked') ) {
+						$(".banner-place").addClass('disabled')
+					}else{
+						$(".banner-place").removeClass('disabled')
+						$(".banner-place").removeClass('active')
+					}
+
+					generate_preview();
+				});
 
 				function drawLayouts() {
 					$(".drop-region").remove();

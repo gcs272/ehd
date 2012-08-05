@@ -1,6 +1,7 @@
 from flask import Blueprint, g, url_for, redirect, session, request, flash, render_template, jsonify
 from flaskext.oauth import OAuth
 from app import main
+import random
 
 etsy = Blueprint('etsy', __name__)
 
@@ -45,6 +46,7 @@ def verify(resp):
 
     flash(u'You were signed in!')
     return redirect(next_url)
+
 
 ### api routes ###
 def get_user(id=None):
@@ -166,6 +168,9 @@ def get_listing_image(listingid=None, imageid=None):
         
     return data
 
+@etsy.route('/customers')
+def get_customers():
+    return jsonify(getShopReceipts())
 
 @etsy.route('/images')
 def get_images():
@@ -193,7 +198,7 @@ def getShopReceipts():
         shop_receipts = getReceiptsForShop(shop_id)
         numReceipts = shop_receipts.get('count')
 
-        shop_customers = dict()
+        shop_customers = {}
 
         for j in range(0, numReceipts):
             sr =  shop_receipts['results'][j];
@@ -216,6 +221,30 @@ def getShopReceipts():
 
                 shop_customers[customer_id]['sum'] = float(sr.get('total_price'))
                 shop_customers[customer_id]['num_orders'] = 1
+
+            cust = {
+                'name': 'name',
+                'email': 'user@example.com',
+                'address': {
+                    'first_line': '123 Fake St',
+                    'second_line': '#4',
+                    'city': 'Philadelphia',
+                    'state': 'PA',
+                    'zip': '19147',
+                    'country': 'United States'
+                } 
+            }
+
+            shop_customers['abc'] = cust
+            shop_customers['def'] = dict(cust) 
+            shop_customers['hjk'] = dict(cust) 
+
+            shop_customers['abc']['name'] = 'Graham Smith'
+            shop_customers['def']['name'] = 'Gary Chan'
+            shop_customers['hjk']['name'] = 'Claire-Marine Sarner'
+            shop_customers['abc']['sum'] = '%d.%d' % (random.randint(0,100), random.randint(10,90))
+            shop_customers['def']['sum'] = '%d.%d' % (random.randint(0,100), random.randint(10,90))
+            shop_customers['hjk']['sum'] = '%d.%d' % (random.randint(0,100), random.randint(10,90))
 
         shopList[shop_id] = dict()
         shopList[shop_id]['shop_name'] = shop_name

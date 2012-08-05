@@ -26,6 +26,10 @@ def index():
 def create_postcard():
 	return render_template('create_postcard.html')
 
+@main.route('/recipients')
+def add_recipients():
+    return render_template('recipients.html')
+
 @main.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     if request.method == 'POST':
