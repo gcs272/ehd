@@ -2,3 +2,4 @@ Flask
 Flask-OAuth
 Flask-Script
 pil
+requests
