@@ -1,4 +1,4 @@
-from flask import Blueprint, g, url_for, redirect, session, request, flash, render_template
+from flask import Blueprint, g, url_for, redirect, session, request, flash, render_template, jsonify
 from flaskext.oauth import OAuth
 
 from app import main
@@ -23,12 +23,11 @@ def index():
     if access_token is None:
         return redirect(url_for('etsy.register'))
 
-    return "%s %s" % access_token
+    return redirect(url_for('create_postcard'))
 
 ### auth routes ###
 @etsy.route('/register')
 def register():
-
     return api.authorize(callback=url_for('etsy.verify', next=request.args.get('next') or request.referrer or None))
 
 @etsy.route('/verify')
@@ -171,7 +170,7 @@ def get_listing_image(listingid=None, imageid=None):
 
 @etsy.route('/images')
 def get_images():
-    return getImagesForShop()
+    return jsonify(getImagesForShop())
 
 @etsy.route('/store')
 def test():
@@ -260,7 +259,6 @@ def getImagesForShop(shopid=None):
         for j in range(0, numImages):
             results['images'].append(images[j]['url_fullxfull'])
     
-
     return results
 ### utility routes ###
 @api.tokengetter

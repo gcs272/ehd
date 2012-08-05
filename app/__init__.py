@@ -2,6 +2,7 @@
 
 from flask import Flask, redirect, url_for, session, request, g,\
         render_template
+
 import stripe
 import json
 import uuid
@@ -16,6 +17,10 @@ main.register_blueprint(etsy, url_prefix='/etsy')
 @main.route('/')
 def index():
     return render_template('index.html')
+
+@main.route('/create')
+def create_postcard():
+	return render_template('create_postcard.html')
 
 @main.route('/checkout', methods=['GET', 'POST'])
 def checkout():
@@ -35,7 +40,7 @@ def checkout():
 
     return render_template('checkout.html')
 
-@main.route('/generate', methods=['POST'])
+@main.route('/image/generate', methods=['POST'])
 def generate():
     # Grab the list of urls being posted and start downloading them
     card = Postcard()
@@ -55,7 +60,7 @@ def generate():
     canvas.quarter().save(outpath)
     return jsonify({'preview': url_for('preview', id=id)})
 
-@main.route('/preview')
+@main.route('/image/preview')
 def preview():
     path = '/tmp/%s.jpg' % (request.args.get('id'))
     response = make_response(open(path).read())

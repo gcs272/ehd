@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<!-- Header -->
+
+
+
+
+			<div class="clear"></div>
+	</div>
+	
+
+
+
+<div id="container-front">
+	
+	<!-- Front Page -->
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/libs/hflip.js') }}"></script>
+
+
+	
+
+<div id="background-front">
+
+	
+	<div id="front-content-padding">
+		
+		<div class="login-top-padding" style="display:none">
+			<div id="login-top">
+				  <span id="diverse">Made in NYC</span>
+			</div>
+		</div>
+		
+		<div id="background-front-color">
+		
+		<div id="front-content-inside">
+			<div id="front-top">
+				<div class="intro">
+					<div class="headline">
+						<h4>Etsy Sellers</h4>
+					</div>
+					<h4>Send postcards to your customers.</h4>
+					<p>Thank you Notes</p>
+					<p>Holidays</p>
+					<p>Promotions & New Listings</p>
+					<p>Show your Love & Gratitude</p>
+				</div>
+				<div id="submit-btn-content" style="float:left">
+					<form action="{{url_for('etsy.index')}}">
+						<button type="submit" name="button" id="button" value="Send"><b>Connect with Etsy</b></button>
+					</form>
+				</div>
+			
+			
+			<div id="front-bottom">
+					
+					
+					<div id="contact-form">
+					<div class="indent40px" style="margin:0 80px 0 40px;display:none">	
+						<div class="headline">
+							<h1>Sign Up</h1>
+						</div>
+
+
+						<div id="contact-form-padding">
+							<form name="trial" id="trial" method="post" action="contactengine.php" style="display:none">
+								<div id="email_input" style="width:80%;float:left;">
+									<label for="username" class="placeholder">Username</label>
+									<input id="Email  " maxlength="128" type="text" class="inputField inputNormalWidth" name="Email" onfocus="if(this.value=='Enter Your Email') this.value='';" onblur="if(this.value=='') this.value='Enter Your Email';" value="Enter Your Email" style="width:90%">
+									<label for="password" class="placeholder" style="margin: 30px 16px 16px 16px;">Password</label>
+									<input id="password  " maxlength="128" type="text" class="inputField inputNormalWidth" name="password" onfocus="if(this.value=='Love & Gratitude') this.value='';" onblur="if(this.value=='') this.value='Love & Gratitude';" value="Love & Gratitude" style="width:90%;margin-top: 10px;">
+								</div>
+								<div id="submit-btn-content" style="float:right">
+								<button type="submit" name="button" id="button" value="Send"><b>Submit</b></button>
+								</div>
+							</form>
+						
+						</div>
+						
+						</div>
+
+					</div>
+					<div class="clear"></div>
+					</div>
+
+
+			</div>
+		</div>	
+		</div>
+	</div>
+</div>
+		<div class="clear"></div>
+
+		
+		<div class="spacer"></div>
+		<div id="front-content-bottom">
+			<div id="front-content-bottom-color">
+		
+			<div class="headline">
+			<h1>How Burrito Bowl Works</h1>
+		</div>
+			<ul id="grid-wrap" class="grid-home">
+				<li class="grid-left">
+					<a class="grid-item-link" href="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" title="Tracey Ige"><div class="grid-image-frame"> <img src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png"></div><div class="number-dot"><div class="numb">1</div></div><div class="instruction-image-title">Create Happiness</div></a>
+				</li>
+				
+				<li> 
+					<a class="grid-item-link" href="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" title="Tracey Ige"><div class="grid-image-frame"> <img src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png"></div><div class="number-dot"><div class="numb">2</div></div><div class="instruction-image-title">Choose Admirers</div></a>
+				</li>
+				
+				<li class="grid-right"> 
+					<a class="grid-item-link" href="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" title="Tracey Ige"><div class="grid-image-frame"> <img src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png"></div><div class="number-dot"><div class="numb">3</div></div><div class="instruction-image-title">Send Appreciation</div></a>
+				</li>
+			</ul>
+		
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		<div class="divider"></div>
+		
+		
+		<div id="front-content-bottom">
+			<div id="front-content-bottom-color">
+				<div class="headline">
+					<h1>Etsy Shops Using Burrito Bowl <span>(Click to Flip)</span></h1>
+				</div>
+				<ul id="grid-wrap" class="grid-home">
+					<li class="grid-left grid-item"> 
+						<img class="image1" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
+					  <img class="image2" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
+						<div class="grid-image-title">Handcraft</div>
+					</li>
+					
+					<li> 
+						<img class="image1" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
+					  <img class="image2" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
+						<div class="grid-image-title">Vintage</div>
+					</li>
+					
+					<li class="grid-right grid-item"> 
+						<img class="image1" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
+					  <img class="image2" src="http://crayonstoconcept.com/wp-content/images/portraits/tracey-ige.png" />
+						<div class="grid-image-title">Blue Ocean</div>
+					</li>
+				</ul>
+
+			<div class="clear"></div>
+			</div>
+		</div>
+		
+
+		<div class="divider"></div>
+
+		<div class="clear"></div>
+		</div>
+		
+		
+		
+		<div id="companies-sponsor" style="display:none">
+			<div class="indent40px">	
+			<div class="headline">
+				<h1>Etsy Shops Using Burrito Bowl</h1>
+			</div>
+			
+			<div id="companies-list">
+				<ul>
+					<li><a href="#"><img src="images/wsj.png" name="IBM"></a></li>
+					<li><a href="#"><img src="images/forbes.png" name="Microsoft" style="width: 120px;"></a></li>
+					<li><a href="#"><img src="images/foxnews.png" name="Google"style="width: 80px;margin: -10px;"></a></li>
+					<li><a href="#"><img src="images/businessinsider.png" name="Sony"style="width: 90px;margin: -10px;"></a></li>
+					<li><a href="#"><img src="images/goodday.png" name="Vimeo"style="width: 120px;margin: -10px;"></a></li>
+					<li style="margin-right:0"><a href="#"><img src="images/msnbc.png" name="Barclays Capital"style="width: 120px;"></a></li>
+				</ul>
+			</div>
+			</div>
+		</div>
+		
+		
+</div>
+	
+	<!-- Footer -->
+
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block head %}
+	<style>
+	
+	#card-layouts-wrapper {
+		margin-top: 100px;
+		padding: 25px;
+	}
+
+	</style>
+{% endblock %}
+{% block content %}
+	<div id="card-layouts-wrapper">
+	<h1>Create Your Cards</h1>
+	<h3>Choose a layout and click to drag and drop your photos on the card</h3>
+
+	<div id="card-layouts">
+		<div id="card-layouts-sidebar">
+			<div id="sidebar-layouts">
+				<h3>Layout</h3>
+				<div class="layout-thumb" id="layout-1"></div>
+				<div class="layout-thumb" id="layout-4"></div>
+				<div class="layout-thumb" id="layout-9"></div>
+			</div>
+			<div id="sidebar-background">
+				<h3>Background</h3>
+				<div class="background-swatch-container">
+					<div class="background-swatch white"></div>
+					<div class="background-swatch black"></div>
+				</div>
+			</div>
+			<div id="sidebar-banner">
+				<div id="banner-container">
+					<div id="banner-top"></div>
+					<div id="banner-bottom"></div>
+					<input type="checkbox"></input><span>Hide</span>
+				</div>
+			</div>
+		</div>
+		<div id="card-layouts-main">
+		</div>
+
+		<div id="cards-photos">
+		</div>
+
+		<div id="add-message"></div>
+	</div>
+</div>
+{% endblock %}

@@ -1,4 +1,21 @@
 {% extends 'base.html' %}
+{% block head %}
+	<style>
+		.store-wrapper {
+			margin-top: 50px;
+		}
+		.store-name {
+			font-size: 3em;
+			font-weight: bold;
+			border-bottom: 1px solid black;
+		}
+
+		.customer-wrapper div {
+			display: inline-block;
+		}
+
+	</style>
+{% endblock %}
 {% block content %}
 {% for i in stores %}
 	{% set store = stores[i] %}

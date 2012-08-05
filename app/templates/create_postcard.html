@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% block head %}
+
+	<style>
+		.layout-tile { background: white; border: 1px solid whitesmoke; width: auto; display: inline-block; padding: 5px; margin: 2px; cursor: pointer;}
+		.active { background: #EEE; padding: 7px; margin: 0px;}
+
+		.template-content .right {
+			border: 0px;
+			padding: 10px;
+		}
+
+		.background-swatch {
+			width: 25px;
+			height: 25px;
+			padding: 5px;
+			margin: 2px;
+			border: 1px solid whitesmoke;
+			display: inline-block;
+			cursor: pointer;
+		}
+		.background-color {
+			width: 25px;
+			height: 25px;
+		}
+		.background-color.black {
+			background: black;
+		}
+
+		.background-color.white {
+			background: white;
+		}
+
+		#banner-position {
+			width: 90%;
+			height: 100px;
+			border: 1px solid whitesmoke;
+		}
+		#layout-main {
+			background: white;
+		}
+		#banner-top-placeholder, #banner-bottom-placeholder {
+			position: relative;
+			border: 1px solid whitesmoke;
+			background: whitesmoke;
+			height: 20px;
+			width: 50%;
+			margin-left: 25%;
+			padding: 3px;
+			cursor: pointer;
+		}
+
+		#banner-bottom-placeholder {
+			bottom: 0px;
+			top: 45px;
+		}
+
+		#banner-position .active {
+			padding: 2px;
+			border: 1px solid black;
+		}
+
+		#banner-position .banner-place.disabled {
+			background: rgba(250, 250, 250, .5);
+			border: 0px;
+			padding: 4px;
+
+		}
+
+		.preview-slider {
+			width: 90%;
+			height: 200px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.slider-img {
+			margin-left: 20px;
+			margin-right: 20px;
+			margin-top: 25px;
+		}
+		.slider-img img{
+			width: 150px;
+			height: 150px;
+			border: 2px solid whiteSmoke;
+			box-shadow: 1px 1px 0px 0px rgba( 200, 200, 200, .7);
+		}
+
+		.drop-region {
+			position: absolute;
+		}
+
+		.slider-img {
+			z-index: 10000;
+			display: inline-block;
+		}
+	</style>
+{% endblock %}
+{% block content %}
+			<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+			<div class="clear"></div>
+	
+	
+
+
+
+<div id="container-front">
+	
+	<!-- Front Page -->
+		<div class="clear"></div>
+
+		<div class="spacer"></div>
+		<div class="template-content-header">
+			<div id="front-content-bottom-color">	
+				<div class="headline">
+					<h1>Create Your Card</h1>
+					<p>Choose a layout and click to drag and drop your photos onto the card.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		<div class="divider"></div>
+</div>
+		<div class="template-content">
+			<div class="left">
+				<div class="left-layout">
+					<h3 style="padding:5px 0 0 0">Layout</h3>
+					<div class="layout-tile" id="layout-1" data-dimensions="1">
+						<img src="http://img1.etsystatic.com/000/0/6059640/il_75x75.318354433.jpg" width="120" height="80" alt="Handmade Jewelry. Daffodil Earrings, sterling silver and 4 genuine pearls.">
+					</div>
+					<div class="layout-tile" id="layout-4" data-dimensions="2">
+						<img src="http://img1.etsystatic.com/000/0/6059640/il_75x75.318354433.jpg" width="120" height="80" alt="Handmade Jewelry. Daffodil Earrings, sterling silver and 4 genuine pearls.">
+					</div>
+					<div class="layout-tile" id="layout-9" data-dimensions="3">
+						<img src="http://img1.etsystatic.com/000/0/6059640/il_75x75.318354433.jpg" width="120" height="80" alt="Handmade Jewelry. Daffodil Earrings, sterling silver and 4 genuine pearls.">
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+				
+				<div class="left-background">
+					<h3>Background</h3>
+					<div class="background-swatch">
+						<div class="background-color black"></div>
+					</div>
+					<div class="background-swatch">
+						<div class="background-color white"></div>
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+				
+				<div class="left-shopbanner">
+					<h3>Shop Banner</h3>
+					<div id="banner-position">
+						<div id="banner-top-placeholder" class="banner-place" data-banner="top"></div>
+						<div id="banner-bottom-placeholder" class="banner-place" data-banner="bottom"></div>
+					</div>
+					<div class="clear"></div>
+					<div class="do_not_include">
+					<form>
+					<input type="checkbox" name="banner_do_not_include" id="banner-hide"><p>Do not include</p>
+					</form>
+					</div>
+				</div>
+	
+			</div>
+			
+			<div class="right" id="layout-main">
+				<div class="preview-padding">
+					<div class="preview">
+						<img src="http://designarray.com/images/made/images/uploads/feature_titles/a-new-website-for-berger-foehr_590_360_gra_c1.jpg" width="670" height="498" alt="">
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				<div class="preview-slider">
+			
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+		
+		</div>
+
+		<div class="clear"></div>
+	
+		
+		<div class="clear"></div>
+		
+		<div class="add-message">
+			<div id="submit-btn-content" style="float:right">
+							<button type="submit" name="button" id="button" value="Send"><b>Add Message &gt;&gt;</b></button>
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+
+		<script>
+			var images = {};
+			$(document).ready(function(){
+				$(".layout-tile").click(function(){
+					$(".layout-tile.active").removeClass('active');
+					$(this).addClass('active')
+					drawLayouts();
+				})
+
+				$(".background-swatch").click(function(){
+					$(".background-swatch.active").removeClass('active');
+					$(this).addClass('active')
+					var color = $(this).find('.background-color').css("background-color")
+					$(".preview-padding").css('background', color)
+				})
+
+				$(".banner-place").click(function(){
+					if($("#banner-hide").is(':checked')) return;
+					$(".banner-place.active").removeClass('active');
+					$(this).addClass('active')
+				})
+
+				$("#banner-hide").on('change', function(e){
+					if( $("#banner-hide").is(':checked') ) {
+						$(".banner-place").addClass('disabled')
+					}else{
+						$(".banner-place").removeClass('disabled')
+						$(".banner-place").removeClass('active')
+					}
+				})
+
+				$(".slider-img").on('click', function(e) {
+					e.preventDefault();
+				})
+
+				function drawLayouts() {
+					$(".drop-region").remove();
+					var data = getData();
+				
+					var length = data.layout.x * data.layout.y;
+
+					var width = $(".preview-padding").outerWidth();
+					var height = $(".preview-padding").outerHeight();
+					var offset = $(".preview-padding").offset();
+
+					for( var x = 0; x < data.layout.x; x++ ) {
+						for( var y = 0; y < data.layout.y; y++) {
+							var left = offset.left + (width/data.layout.x * x)
+							var top = offset.top + (height/data.layout.y * y)
+							var w = width / data.layout.x
+							var h = height / data.layout.y
+
+							$region = $("<div class='drop-region'></div>")
+	
+							$region.css({
+								left: left,
+								top: top,
+								width: w,
+								height: h
+							}).data('position', x + "," + y)
+
+							$("body").append($region)
+						}
+					}
+
+					$(".drop-region").droppable({
+						drop: function(e, ui) {
+							(e)
+							var img = ui.draggable.find('img').clone()
+							img.css({
+								'width': $(this).width(),
+								'height': $(this).height()
+							})
+							
+							$(this).html(img)
+							return false;
+						}
+					})
+						
+					
+				}
+
+				function getData() {
+					var layout = $(".layout-tile.active").data('dimensions')
+					layout = {x: layout, y: layout};
+					
+					var bgColor = $(".background-swatch.active").find('.background-color').css('background-color')
+
+					var avatarSrc = images.avatar;
+					var bannerSrc = images.banner;
+					var bannerPlacement = $(".banner-place.active").data('banner');
+					var imgs = $(".drop-region")
+					var imgArr = [];
+
+					for( var i = 0; i < imgs.length; i++ ) {
+						console.log(imgs[i])
+						var im = $(imgs[i]).find('img');
+						imgArr.push({
+							src: ( im ? im.attr('src') : null ),
+							position: $(imgs[i]).data('position')
+						})
+					}
+
+					var payload = {
+						layout: layout,
+						background: bgColor,
+						avatar: avatarSrc,
+						banner: {
+							src: bannerSrc,
+							placement: bannerPlacement,
+							showBanner: $("#banner-hide").is(':checked')
+						},
+						images: imgArr
+					}
+
+					console.log(imgArr)
+
+					return payload
+					//take it to greg
+
+				}
+
+				a = getData;
+
+				$(".layout-tile:first").trigger('click');
+				$(".background-swatch:first").trigger('click')
+				$(".banner-place:last").trigger('click')
+
+				$.ajax({
+					url: 'etsy/images',
+					success: function(resp) {
+						
+						images = resp;
+						var html = "";
+						for( var i = 0; i < images.images.length; i++ ) {
+							html += "<div class='slider-img'><img src='"+images.images[i]+"'></img></div>";
+						}
+						$(".preview-slider").html(html)
+						$(".slider-img").draggable({revert: "valid"})
+					}
+				})
+			})
+		</script>
+		
+{% endblock %}

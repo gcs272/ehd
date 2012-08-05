@@ -1,21 +1,48 @@
 <html>
 	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Burrito Bowl</title>
+		<meta name="description" content="Burrito Bowl" />
 		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}" />
 		{% block head %}{% endblock %}
 	</head>	
-	<style>
-		.store-name {
-			font-size: 3em;
-			font-weight: bold;
-			border-bottom: 1px solid black;
-		}
-
-		.customer-wrapper div {
-			display: inline-block;
-		}
-	</style>
 <body>
+
+	<div class="header">			
+
+		<div style="width:960px;margin:auto">
+		
+			<div class="title-name">
+			<a href="{{url_for('index')}}">Burrito Bowl</a>
+			</div>
+			
+			<p class="nav">
+			<a href="#">Made in NYC</a>
+			</p>
+
+		</div>
+
+	</div>
+	<div class="header-placeholder"></div>
+	{% block header %}{% endblock %}
 	{% block content %}
 	{% endblock %}
+	<!-- Footer -->
+<footer>
+	<div class="clear"></div>
+	
+	<div id="footer-copyright">
+		<ul>
+			<li><a href="#">Follow us @</a></li>
+			<li><a href="#">Etsy</a></li>
+			<li><a href="#">Twitter</a></li>
+			<li><a href="#">Pinterest</a></li>
+			<li><a href="#">RSS</a></li>
+		</ul>
+		<p>© Burrito Bowl 2012</p>
+	</div>
+	
+</footer>
 </body>
 </html>
