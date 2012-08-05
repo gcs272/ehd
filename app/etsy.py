@@ -13,10 +13,8 @@ api = oauth.remote_app('etsy',
     authorize_url= main.config['ETSY_AUTHORIZE_URL'],
     consumer_key= main.config['ETSY_CONSUMER_KEY'],
     consumer_secret= main.config['ETSY_CONSUMER_SECRET'],
-    request_token_params=main.config['ETSY_SCOPE']
+    request_token_params=dict(scope= main.config['ETSY_SCOPE'], limit=main.config['ETSY_API_LIMIT'])
 )
-
-
 
 ### routes ###
 @etsy.route('/')
@@ -95,7 +93,7 @@ def get_transaction(userid=None, transactionid=None):
     else:
         data = None
         
-    return str(data)
+    return data
 
 @etsy.route('/users/<userid>/shops/')
 def get_shops(userid=None):
@@ -103,13 +101,13 @@ def get_shops(userid=None):
         userid = "__SELF__"
 
     resp = api.get('http://openapi.etsy.com/v2/users/'+userid+'/shops/')
-    print resp.data
+
     if resp.status == 200:
         data = resp.data
     else:
         data = None
         
-    return str(data)
+    return data
 
 @etsy.route('/users/<userid>/shops/<shopid>')
 def get_shop(userid=None, shopid=None):
@@ -126,7 +124,70 @@ def get_shop(userid=None, shopid=None):
     else:
         data = None
         
-    return str(data)
+    return data
+
+@etsy.route('/test')
+def test():
+    return getShopReceipts()
+
+def getShopReceipts():
+    shops = get_shops()
+    i = 0
+    numShops = shops['count']
+
+    shopList = dict()
+
+    for i in range(0, numShops):
+        s = shops['results'][i]
+        shop_name = s.get('shop_name')
+        shop_id = s.get('shop_id')
+        owner_id = s.get('user_id')
+        owner_login = s.get('login_name')
+        shop_receipts = getReceiptsForShop(shop_id)
+        numReceipts = shop_receipts['count']
+
+        shop_customers = dict()
+        for j in range(0, numReceipts):
+            customer_id = shop_receipts[j].get('buyer_user_id')
+            if customer_id in shop_customers:
+                shop_costomers[customer_id]['sum'] += shop_receipts[j].get('total_price')
+                shop_costomers[customer_id]['num_orders'] += 1
+            else:
+                shop_costumers[customer_id] = dict()
+                shop_costomers[customer_id]['name'] = shop_receipts[j].get('name')
+                shop_costomers[customer_id]['email'] = shop_receipts[j].get('email')
+
+                shop_costomers[customer_id]['address'] = dict()
+                shop_costomers[customer_id]['address']['first_line'] = shop_receipts[j].get('first_line')
+                shop_costomers[customer_id]['address']['second_line'] = shop_receipts[j].get('second_line')
+                shop_costomers[customer_id]['address']['city'] = shop_receipts[j].get('city')
+                shop_costomers[customer_id]['address']['state'] = shop_receipts[j].get('state')
+                shop_costomers[customer_id]['address']['zip'] = shop_receipts[j].get('zip')
+                shop_costomers[customer_id]['address']['country'] = shop_receipts[j].get('country_id')
+
+                shop_costomers[customer_id]['sum'] = shop_receipts[j].get('total_price')
+                shop_costomers[customer_id]['num_orders'] = 1
+
+        shopList[shop_id] = dict()
+        shopList[shop_id]['shop_name'] = shop_name
+        shopList[shop_id]['shop_id'] = shop_id
+        shopList[shop_id]['owner_id'] = owner_id
+        shopList[shop_id]['owner_login'] = owner_login
+        shopList[shop_id]['shop_customers'] = shop_customers
+
+    return str(shopList)
+
+def getReceiptsForShop(shopid=None):
+    if shopid is None: return None
+
+    resp = api.get('http://openapi.etsy.com/v2/shops/'+str(shopid)+'/receipts/')
+    print resp
+    if resp.status == 200:
+        data = resp.data
+    else:
+        data = None
+        
+    return data
 
 ### utility routes ###
 @api.tokengetter
