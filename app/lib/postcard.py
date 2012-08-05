@@ -28,11 +28,24 @@ class Postcard(object):
         x = self.images[0].size[0]
         y = 50000
 
-
         for i in self.images:
             if i.size[1] < y:
                 y = i.size[1]
 
+        if x * grid_size[0] > self._card_width:
+            # calculate the new x
+            x = (self._card_width - (24 * grid_size[0])) / grid_size[0]
+            print x
+
+            y = (self._card_height - (24 * grid_size[1])) / grid_size[1]
+            
+            # Resize all of the images to fit the box
+            images = []
+            for image in self.images:
+                images.append(self.shrink_to_box(image, x, y))
+
+            self.images = images
+        
         # Calculate even padding
         (padding_x, padding_y) = self.calculate_padding(x, y, grid_size)
         
@@ -53,6 +66,22 @@ class Postcard(object):
                 cy += y + padding_y
                 cx = padding_x
                 row_size = 0
+
+    def shrink_to_box(self, image, x, y):
+        width = image.size[0]
+        height = image.size[1]
+
+        if width < x and height < y:
+            return image
+
+        if abs(width - x) > abs(height - y):
+            ratio = x * 1.0 / width
+        else:
+            radio = y * 1.0 / height
+
+        return image.resize((
+            int(width * ratio),
+            int(height * ratio)))
 
     def crop_to(self, image, x, y):
         height = image.size[1]

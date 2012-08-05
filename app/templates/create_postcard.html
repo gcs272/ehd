@@ -170,7 +170,7 @@
 			<div class="right" id="layout-main">
 				<div class="preview-padding">
 					<div class="preview">
-						<img src="http://designarray.com/images/made/images/uploads/feature_titles/a-new-website-for-berger-foehr_590_360_gra_c1.jpg" width="670" height="498" alt="">
+						<p>loading preview...</p>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -200,11 +200,15 @@
 		<script>
 			var images = {};
 			$(document).ready(function(){
-				/*
-				$(".layout-tile").click(function(){
+				$('.layout-tile').click(function() {
+					$('.layout-tile.active').removeClass('active');
+					$(this).addClass('active');
+					generate_preview();
+				});
+				/*$(".layout-tile").click(function(){
 					$(".layout-tile.active").removeClass('active');
 					$(this).addClass('active')
-					drawLayouts();
+					generate_preview();
 				})
 
 				$(".background-swatch").click(function(){
@@ -231,8 +235,7 @@
 
 				$(".slider-img").on('click', function(e) {
 					e.preventDefault();
-				})
-				*/ 
+				})*/
 
 				function drawLayouts() {
 					$(".drop-region").remove();
@@ -285,7 +288,11 @@
 				function generate_preview() {
 					payload = getData();
 					$.post('/image/generate', payload, function(resp) {
-						console.log(resp);
+						img = document.createElement('img');
+						img.src = resp.preview;
+
+						$('.preview').empty();
+						$('.preview').append(img);
 					});
 				}
 
@@ -337,9 +344,6 @@
 
 				a = getData;
 
-				$(".layout-tile:first").trigger('click');
-				$(".background-swatch:first").trigger('click')
-				$(".banner-place:last").trigger('click')
 
 				$.ajax({
 					url: 'etsy/images',
@@ -352,6 +356,9 @@
 						}
 						$(".preview-slider").html(html)
 						$(".slider-img").draggable({revert: "valid"})
+						$(".layout-tile:first").trigger('click');
+						$(".background-swatch:first").trigger('click')
+						$(".banner-place:last").trigger('click')
 						generate_preview();
 					}
 				})

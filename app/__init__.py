@@ -52,11 +52,18 @@ def generate():
     card = Postcard()
     grid_x = int(request.form.get('layout_x'))
     grid_y = int(request.form.get('layout_y'))
+   
+    urls = json.loads(request.form.get('images'))
+    # DEBUG: add junk data to fill up a 3x3 grid
+    urls += urls
+    urls += urls
     
+    # Shorten to just what we actually need
     urls = urls[0:grid_x*grid_y]
-    for url in json.loads(request.form.get('images')):
-        card.add_image(download_image(url))
+    
 
+    for url in urls:
+        card.add_image(download_image(url))
 
     card.generate_grid((grid_x, grid_y))
 
