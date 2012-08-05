@@ -126,7 +126,7 @@
 			<div class="left">
 				<div class="left-layout">
 					<h3 style="padding:5px 0 0 0">Layout</h3>
-					<div class="layout-tile" id="layout-1" data-dimensions="1">
+					<div class="layout-tile active" id="layout-1" data-dimensions="1">
 						<img src="http://img1.etsystatic.com/000/0/6059640/il_75x75.318354433.jpg" width="120" height="80" alt="Handmade Jewelry. Daffodil Earrings, sterling silver and 4 genuine pearls.">
 					</div>
 					<div class="layout-tile" id="layout-4" data-dimensions="2">
@@ -200,6 +200,7 @@
 		<script>
 			var images = {};
 			$(document).ready(function(){
+				/*
 				$(".layout-tile").click(function(){
 					$(".layout-tile.active").removeClass('active');
 					$(this).addClass('active')
@@ -231,6 +232,7 @@
 				$(".slider-img").on('click', function(e) {
 					e.preventDefault();
 				})
+				*/ 
 
 				function drawLayouts() {
 					$(".drop-region").remove();
@@ -280,7 +282,7 @@
 					
 				}
 
-				function image_dropped() {
+				function generate_preview() {
 					payload = getData();
 					$.post('/image/generate', payload, function(resp) {
 						console.log(resp);
@@ -296,8 +298,7 @@
 					var avatarSrc = images.avatar;
 					var bannerSrc = images.banner;
 					var bannerPlacement = $(".banner-place.active").data('banner');
-					var imgs = $(".drop-region img")
-					var imgArr = [];
+					var imgs = images.images;
 
 					/* for( var i = 0; i < imgs.length; i++ ) {
 						console.log(imgs[i]);
@@ -309,9 +310,14 @@
 					} */
 
 					var image_list = [];
+					max_length = (layout.x * layout.y > imgs.length) ?
+						imgs.length : layout.x * layout.y;
 					for (var i = 0; i < imgs.length; i++) {
-						image_list.push(imgs[i].src);
+						image_list.push(imgs[i]);
 					}
+
+					console.log(imgs);
+					console.log(image_list);
 
 					var payload = {
 						layout_x: layout['x'],
@@ -346,6 +352,7 @@
 						}
 						$(".preview-slider").html(html)
 						$(".slider-img").draggable({revert: "valid"})
+						generate_preview();
 					}
 				})
 			});

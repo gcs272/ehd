@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask, redirect, url_for, session, request, g,\
-        render_template
+        render_template, jsonify, make_response
 
 from lib.postcard import Postcard
 
@@ -50,20 +50,24 @@ def generate():
     print request.form.get('images')
     # Grab the list of urls being posted and start downloading them
     card = Postcard()
+    grid_x = int(request.form.get('layout_x'))
+    grid_y = int(request.form.get('layout_y'))
+    
+    urls = urls[0:grid_x*grid_y]
     for url in json.loads(request.form.get('images')):
         card.add_image(download_image(url))
 
-    grid_x = int(request.form.get('layout_x'))
-    grid_y = int(request.form.get('layout_y'))
 
     card.generate_grid((grid_x, grid_y))
 
-    path = download_image(request.form.get('banner'))
-    card.place_banner(path, 'twothirds')
+    banner = json.loads(request.form.get('banner'))
+    if banner['showBanner']:
+        path = download_image(banner['src'])
+        card.place_banner(path, 'twothirds')
 
     id = str(uuid.uuid4())
     outpath = '/tmp/%s.jpg' % (id)
-    canvas.quarter().save(outpath)
+    card.quarter().save(outpath)
     return jsonify({'preview': url_for('preview', id=id)})
 
 @main.route('/image/preview')
@@ -71,7 +75,6 @@ def preview():
     path = '/tmp/%s.jpg' % (request.args.get('id'))
     response = make_response(open(path).read())
     response.headers['Content-Type'] = 'image/jpeg'
-    response.headers['Content-Disposition'] = 'attachment; filename=img.jpg'
     return response
 
 @main.route('/hooray')
