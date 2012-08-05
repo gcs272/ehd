@@ -28,13 +28,13 @@ def index():
 ### auth routes ###
 @etsy.route('/register')
 def register():
-    print url_for('etsy.verify')
+
     return api.authorize(callback=url_for('etsy.verify', next=request.args.get('next') or request.referrer or None))
 
 @etsy.route('/verify')
 @api.authorized_handler
 def verify(resp):
-    print resp
+
     next_url = request.args.get('next') or url_for('etsy.index')
     if resp is None:
         flash(u'You denied the request to sign in.')
@@ -49,8 +49,6 @@ def verify(resp):
     return redirect(next_url)
 
 ### api routes ###
-@etsy.route('/users/')
-@etsy.route('/users/<id>')
 def get_user(id=None):
     if id is None:
         id = "__SELF__"
@@ -64,13 +62,12 @@ def get_user(id=None):
         
     return str(data)
 
-@etsy.route('/users/<userid>/transactions/')
 def get_transactions(userid=None):
     if userid is None:
         userid = "__SELF__"
 
     resp = api.get('http://openapi.etsy.com/v2/users/'+userid+'/transactions/')
-    print resp.data
+
     if resp.status == 200:
         data = resp.data
     else:
@@ -78,7 +75,6 @@ def get_transactions(userid=None):
         
     return str(data)
 
-@etsy.route('/users/<userid>/transactions/<transactionid>')
 def get_transaction(userid=None, transactionid=None):
     if userid is None:
         userid = "__SELF__"
@@ -95,7 +91,6 @@ def get_transaction(userid=None, transactionid=None):
         
     return data
 
-@etsy.route('/users/<userid>/shops/')
 def get_shops(userid=None):
     if userid is None:
         userid = "__SELF__"
@@ -109,7 +104,6 @@ def get_shops(userid=None):
         
     return data
 
-@etsy.route('/users/<userid>/shops/<shopid>')
 def get_shop(userid=None, shopid=None):
     if userid is None:
         userid = "__SELF__"
@@ -126,15 +120,67 @@ def get_shop(userid=None, shopid=None):
         
     return data
 
-@etsy.route('/test')
+def get_avatar(userid=None):
+    if userid is None:
+        userid = "__SELF__"
+
+    resp = api.get('http://openapi.etsy.com/v2/users/'+str(userid)+'/avatar/src')
+
+    if resp.status == 200:
+        data = resp.data
+    else:
+        data = None
+        
+    return data
+
+def get_shop_listings(shopid=None):
+    if shopid is None: return None
+
+    resp = api.get('http://openapi.etsy.com/v2/shops/'+str(shopid)+'/listings/active')
+
+    if resp.status == 200:
+        data = resp.data
+    else:
+        data = None
+        
+    return data
+
+def get_listing_images(listingid=None):
+    if listingid is None: return None
+
+    resp = api.get('http://openapi.etsy.com/v2/listings/'+str(listingid)+'/images')
+
+    if resp.status == 200:
+        data = resp.data
+    else:
+        data = None
+
+    return data
+
+def get_listing_image(listingid=None, imageid=None):
+    if listingid is None or imageid is None: return None
+    resp = api.get('http://openapi.etsy.com/v2/listings/'+str(listingid)+'/images/' + imageid)
+
+    if resp.status == 200:
+        data = resp.data
+    else:
+        data = None
+        
+    return data
+
+
+@etsy.route('/images')
+def get_images():
+    return getImagesForShop()
+
+@etsy.route('/store')
 def test():
     shop_data = getShopReceipts()
-    print shop_data
     return render_template('etsy/shops.html', stores=shop_data)
 
 def getShopReceipts():
     shops = get_shops()
-    
+
     i = 0
     numShops = shops.get('count')
 
@@ -194,6 +240,28 @@ def getReceiptsForShop(shopid=None):
         
     return data
 
+def getImagesForShop(shopid=None):
+    shop_data = get_shop(userid=None, shopid=shopid)['results'][0]
+
+    results = dict()
+    results['banner'] = shop_data['image_url_760x100'];
+    results['avatar'] = get_avatar()['results']['src'];
+    results['images'] = list()
+    listings = get_shop_listings(shop_data['shop_id'])
+    numListings = listings['count']
+    listings = listings['results']
+
+    for i in range(0, numListings):
+        listing_id = listings[i]['listing_id']
+        images = get_listing_images(listing_id)
+        numImages = images['count']
+        images = images['results']
+        
+        for j in range(0, numImages):
+            results['images'].append(images[j]['url_fullxfull'])
+    
+
+    return results
 ### utility routes ###
 @api.tokengetter
 def get_token():

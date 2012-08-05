@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
-{{ stores }}
+{% block content %}
 {% for i in stores %}
-
+	{% set store = stores[i] %}
 	<div class="store-wrapper">
-		{{ i }}
-	</div>
+		<div class="store-name">{{ store.get("shop_name") }}</div>
+		{% for j in store.get('shop_customers') %}
+			{% set customer = store.get('shop_customers')[j] %}
+			<div class="customer-wrapper">
 
+				<div class="customer-name">{{ customer.get('name') }}</div>
+				<div class="customer-total">{{ customer.get('sum')  }}</div>
+			</div>
+		{% endfor %}
+	</div>
 {% endfor %}
+{% endblock %}
