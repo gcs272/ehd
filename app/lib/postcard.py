@@ -1,34 +1,30 @@
 #!/usr/bin/env python
-#from PIL import Image, ImageDraw
-Import = ""
-ImageDraw = ""
+from PIL import Image, ImageDraw
+
 class Postcard(object):
     _card_width = 1838
     _card_height = 1238
     _image_padding = 8
 
     def __init__(self):
-        # self.images = []
-        # self.canvas = Image.new('RGBA', (
-        #     self._card_width,
-        #     self._card_height))
-        # self.canvas.paste((255, 255, 255), 
-        #         (0, 0, self._card_width, self._card_height))
-        return
+        self.images = []
+        self.canvas = Image.new('RGBA', (
+            self._card_width,
+            self._card_height))
+        self.canvas.paste((255, 255, 255), 
+                (0, 0, self._card_width, self._card_height))
+
     def add_image(self, path):
-        return
-        # self.images.append(Image.open(path))
+        self.images.append(Image.open(path))
 
     def calculate_padding(self, x, y, grid_size):
-        return;
-        # unused_x = self._card_width - (grid_size[0] * x)
-        # unused_y = self._card_height - (grid_size[1] * y)
+        unused_x = self._card_width - (grid_size[0] * x)
+        unused_y = self._card_height - (grid_size[1] * y)
 
-        # return (unused_x / (grid_size[0] + 1),
-        #     unused_y / (grid_size[1] + 1))
+        return (unused_x / (grid_size[0] + 1),
+            unused_y / (grid_size[1] + 1))
     
     def generate_grid(self, grid_size=(3,3)):
-        return;
         x = self.images[0].size[0]
         y = 50000
 
