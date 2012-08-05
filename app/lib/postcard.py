@@ -117,8 +117,8 @@ class Postcard(object):
 
     def quarter(self):
         return self.canvas.resize((
-                int(self._card_width / 4),
-                int(self._card_height / 4)))
+                int(self._card_width / 3),
+                int(self._card_height / 3)))
 
 
 if __name__ == '__main__':

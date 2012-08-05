@@ -2618,8 +2618,8 @@ footer h1{font-size: 25px;font-weight: bold;}
 ----------------------------------------------- */
 .template-content-header{margin: 50px auto 0;width: 960px;}
 .template-content{margin: 0px auto 0;width: 960px;border: 2px solid;clear: both;}
-.template-content .left{width: 220px;float:left;margin-left:10px;}
-.template-content .right{width: 710px;float: left;border: 10px solid black;background: black;margin: auto 0;}
+.template-content .left{width: 219px;float:left;margin-left:10px; border-right: 1px solid #ccc;}
+.template-content .right{width: 710px;float: left;border: 10px solid black;background: black;margin: auto 0; text-align: center;}
 .template-content h3{padding:15px 0 5px;font-size:20px;}
 .layout-tile{margin:10px 0 0 0;}
 .do_not_include{padding:15px 0 0;}
