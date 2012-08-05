@@ -74,12 +74,16 @@ def generate():
 
     id = str(uuid.uuid4())
     outpath = '/tmp/%s.jpg' % (id)
-    card.quarter().save(outpath)
+    card.canvas.save(outpath)
+    session['card_path'] = outpath
+
+    preview_path = '/tmp/%s-preview.jpg' % (id)
+    card.quarter().save(preview_path)
     return jsonify({'preview': url_for('preview', id=id)})
 
 @main.route('/image/preview')
 def preview():
-    path = '/tmp/%s.jpg' % (request.args.get('id'))
+    path = '/tmp/%s-preview.jpg' % (request.args.get('id'))
     response = make_response(open(path).read())
     response.headers['Content-Type'] = 'image/jpeg'
     return response
