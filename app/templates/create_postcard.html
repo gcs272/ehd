@@ -122,7 +122,7 @@
 			<div id="front-content-bottom-color">	
 				<div class="headline">
 					<h1>Create Your Card</h1>
-					<p>Choose a layout and click to drag and drop your photos onto the card.</p>
+					<p>Choose a layout to preview your card.</p>
 				</div>
 			</div>
 		</div>
@@ -293,22 +293,6 @@
 						}
 					}
 
-					$(".drop-region").droppable({
-						drop: function(e, ui) {
-							(e)
-							var img = ui.draggable.find('img').clone()
-							img.css({
-								'width': $(this).width(),
-								'height': $(this).height()
-							})
-							
-							$(this).html(img)
-							image_dropped();
-							return false;
-						}
-					})
-						
-					
 				}
 
 				function generate_preview() {
@@ -372,12 +356,6 @@
 					success: function(resp) {
 						
 						images = resp;
-						var html = "";
-						for( var i = 0; i < images.images.length; i++ ) {
-							html += "<div class='slider-img'><img src='"+images.images[i]+"'></img></div>";
-						}
-						$(".preview-slider").html(html)
-						$(".slider-img").draggable({revert: "valid"})
 						$(".layout-tile:first").trigger('click');
 						$(".background-swatch:first").trigger('click')
 						$(".banner-place:last").trigger('click')
