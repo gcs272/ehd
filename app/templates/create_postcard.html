@@ -148,10 +148,10 @@
 				
 				<div class="left-background">
 					<h3>Background</h3>
-					<div class="background-swatch">
+					<div class="background-swatch" data-color='black'>
 						<div class="background-color black"></div>
 					</div>
-					<div class="background-swatch">
+					<div class="background-swatch" data-color='white'>
 						<div class="background-color white"></div>
 					</div>
 				</div>
@@ -215,24 +215,13 @@
 					generate_preview();
 				});
 
-				/* $('.background-swatch').click(function() {
-					$('.layout-tile.active').removeClass('active');
-					$(this).addClass('active')
+				$('.background-swatch').click(function() {
+					$('.background-swatch').removeClass('active');
+					$(this).addClass('active');
 					generate_preview();
 				});
-				$(".layout-tile").click(function(){
-					$(".layout-tile.active").removeClass('active');
-					$(this).addClass('active')
-					generate_preview();
-				})
 
-				$(".background-swatch").click(function(){
-					$(".background-swatch.active").removeClass('active');
-					$(this).addClass('active')
-					var color = $(this).find('.background-color').css("background-color")
-					$(".preview-padding").css('background', color)
-				})
-
+				/*
 				$(".banner-place").click(function(){
 					if($("#banner-hide").is(':checked')) return;
 					$(".banner-place.active").removeClass('active');
@@ -247,10 +236,7 @@
 						$(".banner-place").removeClass('active')
 					}
 				})
-
-				$(".slider-img").on('click', function(e) {
-					e.preventDefault();
-				})*/
+				*/
 
 				$("#banner-hide").on('change', function(e){
 					if( $("#banner-hide").is(':checked') ) {
@@ -310,20 +296,12 @@
 					var layout = $(".layout-tile.active").data('dimensions')
 					layout = {x: layout, y: layout};
 					
-					var bgColor = $(".background-swatch.active").find('.background-color').css('background-color')
+					var bgColor = $(".background-swatch.active").data('color');
 
 					var avatarSrc = images.avatar;
 					var bannerSrc = images.banner;
 					var bannerPlacement = $(".banner-place.active").data('banner');
 					var imgs = images.images;
-
-					/* for( var i = 0; i < imgs.length; i++ ) {
-						var im = $(imgs[i]).find('img');
-						imgArr.push({
-							src: ( im ? im.attr('src') : null ),
-							position: $(imgs[i]).data('position')
-						})
-					} */
 
 					var image_list = [];
 					max_length = (layout.x * layout.y > imgs.length) ?
@@ -356,9 +334,7 @@
 					success: function(resp) {
 						
 						images = resp;
-						$(".layout-tile:first").trigger('click');
-						$(".background-swatch:first").trigger('click')
-						$(".banner-place:last").trigger('click')
+						$('.background-swatch:first').addClass('active');
 						generate_preview();
 					}
 				})
