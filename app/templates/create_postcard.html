@@ -328,16 +328,12 @@
 					
 					var bgColor = $(".background-swatch.active").find('.background-color').css('background-color')
 
-					console.log('images: ');
-					console.log(images);
-
 					var avatarSrc = images.avatar;
 					var bannerSrc = images.banner;
 					var bannerPlacement = $(".banner-place.active").data('banner');
 					var imgs = images.images;
 
 					/* for( var i = 0; i < imgs.length; i++ ) {
-						console.log(imgs[i]);
 						var im = $(imgs[i]).find('img');
 						imgArr.push({
 							src: ( im ? im.attr('src') : null ),
@@ -351,9 +347,6 @@
 					for (var i = 0; i < imgs.length; i++) {
 						image_list.push(imgs[i]);
 					}
-
-					console.log(imgs);
-					console.log(image_list);
 
 					var payload = {
 						layout_x: layout['x'],
