@@ -103,7 +103,9 @@ class Postcard(object):
             box = (center, bottom)
         elif position == 'left':
             box = (0, bottom)
-        elif position == 'twothirds':
+        elif position == 'top':
+            box = (center, 40)
+        elif position == 'bottom':
             box = (center, bottom - 40)
 
         # Draw a stroke around the box

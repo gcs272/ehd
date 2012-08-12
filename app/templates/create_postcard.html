@@ -221,6 +221,13 @@
 					generate_preview();
 				});
 
+				$('.banner-place').click(function() {
+					if ($('#banner-hide').is(':checked')) return;
+					$('.banner-place').removeClass('active');
+					$(this).addClass('active');
+					generate_preview();
+				});
+
 				/*
 				$(".banner-place").click(function(){
 					if($("#banner-hide").is(':checked')) return;
@@ -335,6 +342,7 @@
 						
 						images = resp;
 						$('.background-swatch:first').addClass('active');
+						$('#banner-bottom-placeholder').addClass('active');
 						generate_preview();
 					}
 				})

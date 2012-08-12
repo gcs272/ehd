@@ -81,7 +81,7 @@ def generate():
     banner = json.loads(request.form.get('banner'))
     if banner['showBanner']:
         path = download_image(banner['src'])
-        card.place_banner(path, 'twothirds')
+        card.place_banner(path, banner['placement'])
 
     id = str(uuid.uuid4())
     outpath = '/tmp/%s.jpg' % (id)
