@@ -44,7 +44,6 @@ def checkout():
         if 'stripeToken' in request.form:
             amount = int(session.get('number_of_cards', 1)) * 150
 
-            print 'Got token: %s' % (request.form.get('stripeToken'))
             stripe.api_key = main.config['STRIPE_SECRET_KEY']
             token = request.form.get('stripeToken')
             charge = stripe.Charge.create(
@@ -58,12 +57,13 @@ def checkout():
 
 @main.route('/image/generate', methods=['POST'])
 def generate():
-    print request.form
-    print request.form.get('images')
     # Grab the list of urls being posted and start downloading them
     card = Postcard()
     grid_x = int(request.form.get('layout_x'))
     grid_y = int(request.form.get('layout_y'))
+    
+    # Set the background color
+    card.set_background(request.form.get('background'))
    
     urls = json.loads(request.form.get('images'))
     # DEBUG: add junk data to fill up a 3x3 grid
@@ -72,8 +72,6 @@ def generate():
     
     # Shorten to just what we actually need
     urls = urls[0:grid_x*grid_y]
-    
-    print request.form.get('banner')
 
     for url in urls:
         card.add_image(download_image(url))
@@ -106,7 +104,6 @@ def hooray():
     return render_template('hooray.html')
 
 def download_image(url):
-    print 'downloading: %s' % (url)
     path = '/tmp/%s.jpg' % (hashlib.sha1(url).hexdigest())
     if not os.path.exists(path):
         res = requests.get(url)

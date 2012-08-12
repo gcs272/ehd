@@ -14,6 +14,11 @@ class Postcard(object):
         self.canvas.paste((255, 255, 255), 
                 (0, 0, self._card_width, self._card_height))
 
+    def set_background(self, color_name):
+        draw = ImageDraw.Draw(self.canvas)
+        draw.rectangle((0, 0, self._card_width, self._card_height),\
+            fill=color_name)
+
     def add_image(self, path):
         self.images.append(Image.open(path))
 
@@ -35,7 +40,6 @@ class Postcard(object):
         if x * grid_size[0] > self._card_width:
             # calculate the new x
             x = (self._card_width - (24 * grid_size[0])) / grid_size[0]
-            print x
 
             y = (self._card_height - (24 * grid_size[1])) / grid_size[1]
             
@@ -53,12 +57,10 @@ class Postcard(object):
         cy = padding_y
         row_size = 0
         for image in self.images:
-            print 'placing...'
             image = self.crop_to(image, x, y)
             self.canvas.paste(image, (cx, cy))
             cx += image.size[0] + padding_x
 
-            print 'image: ', image.size
             row_size += 1
 
             # Start a new row if need be
