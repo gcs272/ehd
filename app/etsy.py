@@ -47,141 +47,75 @@ def verify(resp):
     flash(u'You were signed in!')
     return redirect(next_url)
 
+### Wrapper for OAuth get method, validates response.
+def get(uri):
+    resp = api.get(uri)
+    if resp.status == 200:
+        data = resp.data
+    else:
+        data = None
+        
+    return data
 
 ### api routes ###
-def get_user(id=None):
-    if id is None:
-        id = "__SELF__"
 
-    resp = api.get('http://openapi.etsy.com/v2/users/'+id+'/')
+# Return the current or given user
+def get_user(id="__SELF__"):
+    return get('http://openapi.etsy.com/v2/users/'+id+'/')
 
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return str(data)
+# Return all transactions for the current or given user
+def get_transactions(userid="__SELF__"):
+    return get('http://openapi.etsy.com/v2/users/'+userid+'/transactions/')
 
-def get_transactions(userid=None):
-    if userid is None:
-        userid = "__SELF__"
+# Return a specific transaction for the current or given user
+def get_transaction(userid="__SELF__", transactionid=None):
+    if transactionid is None: return None
+    return get('http://openapi.etsy.com/v2/users/'+userid+'/transactions/' + transactionid)
 
-    resp = api.get('http://openapi.etsy.com/v2/users/'+userid+'/transactions/')
+# Return all shops for the current or given user
+def get_shops(userid="__SELF__"):
+    return get('http://openapi.etsy.com/v2/users/'+userid+'/shops/')
 
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return str(data)
+# Return a specific shop for the current or given user
+def get_shop(userid="__SELF__", shopid=None):
+    if shopid is None: return None
+    return get('http://openapi.etsy.com/v2/users/'+userid+'/shops/' + shopid)
 
-def get_transaction(userid=None, transactionid=None):
-    if userid is None:
-        userid = "__SELF__"
+# Return the User's avatar URL
+def get_avatar(userid="__SELF__"):
+    return get('http://openapi.etsy.com/v2/users/'+str(userid)+'/avatar/src')
 
-    if transactionid is None:
-        return get_transactions(userid)
-
-    resp = api.get('http://openapi.etsy.com/v2/users/'+userid+'/transactions/' + transactionid)
-
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return data
-
-def get_shops(userid=None):
-    if userid is None:
-        userid = "__SELF__"
-
-    resp = api.get('http://openapi.etsy.com/v2/users/'+userid+'/shops/')
-
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return data
-
-def get_shop(userid=None, shopid=None):
-    if userid is None:
-        userid = "__SELF__"
-
-    if shopid is None:
-        return get_shops(userid)
-
-    resp = api.get('http://openapi.etsy.com/v2/users/'+userid+'/shops/' + shopid)
-
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return data
-
-def get_avatar(userid=None):
-    if userid is None:
-        userid = "__SELF__"
-
-    resp = api.get('http://openapi.etsy.com/v2/users/'+str(userid)+'/avatar/src')
-
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return data
-
+# Return active listings for a shop
 def get_shop_listings(shopid=None):
     if shopid is None: return None
+    return get('http://openapi.etsy.com/v2/shops/'+str(shopid)+'/listings/active')
 
-    resp = api.get('http://openapi.etsy.com/v2/shops/'+str(shopid)+'/listings/active')
-
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return data
-
-def get_listing_images(listingid=None):
-    if listingid is None: return None
-
-    resp = api.get('http://openapi.etsy.com/v2/listings/'+str(listingid)+'/images')
-
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-
-    return data
-
+# Return a specific image for a specific listing
 def get_listing_image(listingid=None, imageid=None):
     if listingid is None or imageid is None: return None
-    resp = api.get('http://openapi.etsy.com/v2/listings/'+str(listingid)+'/images/' + imageid)
+    return get('http://openapi.etsy.com/v2/listings/'+str(listingid)+'/images/' + imageid)
 
-    if resp.status == 200:
-        data = resp.data
-    else:
-        data = None
-        
-    return data
+# Return all images for a listing
+def get_listing_images(listingid=None):
+    if listingid is None: return None
+    return get('http://openapi.etsy.com/v2/listings/'+str(listingid)+'/images')
 
+### Specifc routes for EHD
 @etsy.route('/customers')
 def get_customers():
-    return jsonify(getShopReceipts())
+    return jsonify(get_shop_receipts())
 
 @etsy.route('/images')
 def get_images():
-    return jsonify(getImagesForShop())
+    return jsonify(get_shop_images())
 
 @etsy.route('/store')
 def test():
-    shop_data = getShopReceipts()
+    shop_data = get_all_receipts()
     return render_template('etsy/shops.html', stores=shop_data)
 
-def getShopReceipts():
+# Get all receipts for a the current user's shop and return customer information.
+def get_all_receipts():
     shops = get_shops()
 
     i = 0
@@ -195,7 +129,7 @@ def getShopReceipts():
         shop_id = s.get('shop_id')
         owner_id = s.get('user_id')
         owner_login = s.get('login_name')
-        shop_receipts = getReceiptsForShop(shop_id)
+        shop_receipts = get_receipts_for_shop(shop_id)
         numReceipts = shop_receipts.get('count')
 
         shop_customers = {}
@@ -222,30 +156,6 @@ def getShopReceipts():
                 shop_customers[customer_id]['sum'] = float(sr.get('total_price'))
                 shop_customers[customer_id]['num_orders'] = 1
 
-            cust = {
-                'name': 'name',
-                'email': 'user@example.com',
-                'address': {
-                    'first_line': '123 Fake St',
-                    'second_line': '#4',
-                    'city': 'Philadelphia',
-                    'state': 'PA',
-                    'zip': '19147',
-                    'country': 'United States'
-                } 
-            }
-
-            shop_customers['abc'] = cust
-            shop_customers['def'] = dict(cust) 
-            shop_customers['hjk'] = dict(cust) 
-
-            shop_customers['abc']['name'] = 'Graham Smith'
-            shop_customers['def']['name'] = 'Gary Chan'
-            shop_customers['hjk']['name'] = 'Claire-Marine Sarner'
-            shop_customers['abc']['sum'] = '%d.%d' % (random.randint(0,100), random.randint(10,90))
-            shop_customers['def']['sum'] = '%d.%d' % (random.randint(0,100), random.randint(10,90))
-            shop_customers['hjk']['sum'] = '%d.%d' % (random.randint(0,100), random.randint(10,90))
-
         shopList[shop_id] = dict()
         shopList[shop_id]['shop_name'] = shop_name
         shopList[shop_id]['shop_id'] = shop_id
@@ -255,7 +165,8 @@ def getShopReceipts():
 
     return shopList
 
-def getReceiptsForShop(shopid=None):
+# Returns a shops receipts for the given shop
+def get_receipts_for_shop(shopid=None):
     if shopid is None: return None
 
     resp = api.get('http://openapi.etsy.com/v2/shops/'+str(shopid)+'/receipts/')
@@ -267,8 +178,12 @@ def getReceiptsForShop(shopid=None):
         
     return data
 
-def getImagesForShop(shopid=None):
-    shop_data = get_shop(userid=None, shopid=shopid)['results'][0]
+# Returns a shops images, banner and user avatar.
+def get_shop_images(shopid=None):
+    if shopid == None:
+        shop_data = get_shops(userid="__SELF__")['results'][0]
+    else:
+        shop_data = get_shop(userid="__SELF__", shopid=shopid)['results'][0]
 
     results = dict()
     results['banner'] = shop_data['image_url_760x100'];
