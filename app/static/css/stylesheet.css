@@ -2702,7 +2702,7 @@ footer h1{font-size: 25px;font-weight: bold;}
 .thank-template-content h3{font-size:20px;font-weight:bold;padding: 15px 0;}
 .thank-template-content-header{margin: 30px auto 0;width: 960px;}
 .share_fb{width: 700px;text-indent: 10px;padding: 10px;background: #9CD8E0;color: black;}
-.order_num{margin: 30px 0 0 0;background: #FA5559;color: white;text-indent: 10px;width: 700px;padding: 10px;}
-.order_num p{float:left;margin:10px 0;width: 350px;}
+.order_num{background: #FA5559;color: white;text-indent: 10px;width: 700px;padding: 10px;}
+.order_num p{float:left;margin:10px 0;width: 350px; font-size: 20px;}
 .postcard-info-padding label{margin: 13px 15px !important;}
 .postcard-info-padding input{font-size:15px;}

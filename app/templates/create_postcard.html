@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block head %}
-
 	<style>
 		.layout-tile { background: white; border: 1px solid whitesmoke; width: auto; display: inline-block; padding: 5px; margin: 2px; cursor: pointer;}
 		.active { background: #EEE; padding: 7px; margin: 0px;}
+
+		.template-content {
+			margin-top: 50px;
+		}
 
 		.template-content .right {
 			border: 0px;
@@ -102,33 +105,26 @@
 			z-index: 10000;
 			display: inline-block;
 		}
+
+		#container-front {
+			margin-top: 100px;
+		}
+
+
 	</style>
 {% endblock %}
 {% block content %}
-			<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-			<div class="clear"></div>
-	
-	
-
-
-
-<div id="container-front">
-	
-	<!-- Front Page -->
-		<div class="clear"></div>
-
-		<div class="spacer"></div>
-		<div class="template-content-header">
-			<div id="front-content-bottom-color">	
-				<div class="headline">
-					<h1>Create Your Card</h1>
-					<p>Choose a layout to preview your card.</p>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+		<div id="container-front">
+			<div class="template-content-header">
+				<div id="front-content-bottom-color">	
+					<div class="headline">
+						<h1>Create Your Card</h1>
+						<p>Choose a layout to preview your card.</p>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		<div class="clear" style='padding-bottom: 32px;'></div>
-</div>
 		<div class="template-content">
 			<div class="left">
 				<div class="left-layout">
@@ -144,8 +140,6 @@
 					</div>
 				</div>
 				
-				<div class="clear"></div>
-				
 				<div class="left-background">
 					<h3>Background</h3>
 					<div class="background-swatch" data-color='black'>
@@ -156,22 +150,18 @@
 					</div>
 				</div>
 				
-				<div class="clear"></div>
-				
 				<div class="left-shopbanner">
 					<h3>Shop Banner</h3>
 					<div id="banner-position">
 						<div id="banner-top-placeholder" class="banner-place" data-banner="top"></div>
 						<div id="banner-bottom-placeholder" class="banner-place" data-banner="bottom"></div>
 					</div>
-					<div class="clear"></div>
 					<div class="do_not_include">
-					<form>
-					<input type="checkbox" name="banner_do_not_include" id="banner-hide"><p>Do not include</p>
-					</form>
+						<form>
+							<input type="checkbox" name="banner_do_not_include" id="banner-hide"><p>Do not include</p>
+						</form>
 					</div>
 				</div>
-	
 			</div>
 			
 			<div class="right" id="layout-main">
@@ -179,174 +169,19 @@
 					<div class="preview">
 						<p>loading preview...</p>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="clear"></div>
-				<div class="preview-slider">
-			
 				</div>
 			</div>
-			
 			<div class="clear"></div>
-		
 		</div>
 
-		<div class="clear"></div>
-	
-		
-		<div class="clear"></div>
-		
 		<div class="add-message">
 			<form action='/recipients' method='GET'>
-			<div id="submit-btn-content" style="float:right">
-							<button type="submit" name="button" id="button" value="Send"><b>Add Message &gt;&gt;</b></button>
-			</div>
+				<div id="submit-btn-content" style="float:right">
+					<button type="submit" name="button" id="button" value="Send"><b>Add Message &gt;&gt;</b></button>
+				</div>
 			</form>
 		</div>
-		
-		<div class="clear"></div>
 
-		<script>
-			var images = {};
-			$(document).ready(function(){
-				$('.layout-tile').click(function() {
-					$('.layout-tile.active').removeClass('active');
-					$(this).addClass('active');
-					generate_preview();
-				});
-
-				$('.background-swatch').click(function() {
-					$('.background-swatch').removeClass('active');
-					$(this).addClass('active');
-					generate_preview();
-				});
-
-				$('.banner-place').click(function() {
-					if ($('#banner-hide').is(':checked')) return;
-					$('.banner-place').removeClass('active');
-					$(this).addClass('active');
-					generate_preview();
-				});
-
-				/*
-				$(".banner-place").click(function(){
-					if($("#banner-hide").is(':checked')) return;
-					$(".banner-place.active").removeClass('active');
-					$(this).addClass('active')
-				})
-
-				$("#banner-hide").on('change', function(e){
-					if( $("#banner-hide").is(':checked') ) {
-						$(".banner-place").addClass('disabled')
-					}else{
-						$(".banner-place").removeClass('disabled')
-						$(".banner-place").removeClass('active')
-					}
-				})
-				*/
-
-				$("#banner-hide").on('change', function(e){
-					if( $("#banner-hide").is(':checked') ) {
-						$(".banner-place").addClass('disabled')
-					}else{
-						$(".banner-place").removeClass('disabled')
-						$(".banner-place").removeClass('active')
-					}
-
-					generate_preview();
-				});
-
-				function drawLayouts() {
-					$(".drop-region").remove();
-					var data = getData();
-				
-					var length = data.layout_x * data.layout_y;
-
-					var width = $(".preview-padding").outerWidth();
-					var height = $(".preview-padding").outerHeight();
-					var offset = $(".preview-padding").offset();
-
-					for( var x = 0; x < data.layout_x; x++ ) {
-						for( var y = 0; y < data.layout_y; y++) {
-							var left = offset.left + (width/data.layout_x * x)
-							var top = offset.top + (height/data.layout_y * y)
-							var w = width / data.layout_x
-							var h = height / data.layout_y
-
-							$region = $("<div class='drop-region'></div>")
-	
-							$region.css({
-								left: left,
-								top: top,
-								width: w,
-								height: h
-							}).data('position', x + "," + y)
-
-							$("body").append($region)
-						}
-					}
-
-				}
-
-				function generate_preview() {
-					payload = getData();
-					$.post('/image/generate', payload, function(resp) {
-						img = document.createElement('img');
-						img.src = resp.preview;
-
-						$('.preview').empty();
-						$('.preview').append(img);
-					});
-				}
-
-				function getData() {
-					var layout = $(".layout-tile.active").data('dimensions')
-					layout = {x: layout, y: layout};
-					
-					var bgColor = $(".background-swatch.active").data('color');
-
-					var avatarSrc = images.avatar;
-					var bannerSrc = images.banner;
-					var bannerPlacement = $(".banner-place.active").data('banner');
-					var imgs = images.images;
-
-					var image_list = [];
-					max_length = (layout.x * layout.y > imgs.length) ?
-						imgs.length : layout.x * layout.y;
-					for (var i = 0; i < imgs.length; i++) {
-						image_list.push(imgs[i]);
-					}
-
-					var payload = {
-						layout_x: layout['x'],
-						layout_y: layout['y'],
-						background: bgColor,
-						avatar: avatarSrc,
-						banner: JSON.stringify({
-							src: bannerSrc,
-							placement: bannerPlacement,
-							showBanner: !$("#banner-hide").is(':checked')
-						}),
-						images: JSON.stringify(image_list)
-					}
-
-					return payload
-				}
-
-				a = getData;
-
-
-				$.ajax({
-					url: 'etsy/images',
-					success: function(resp) {
-						
-						images = resp;
-						$('.background-swatch .white').addClass('active');
-						$('#banner-bottom-placeholder').addClass('active');
-						generate_preview();
-					}
-				})
-			});
-</script>
+		<script src="{{url_for('static', filename='js/create_postcard.js')}}"></script>
 		
 {% endblock %}

@@ -36,7 +36,6 @@
 	<div class='users-container'>
 		<h3>Your Recent Customers</h3>
 		<ul id='users'>
-			
 		</ul>
 	</div>
 
@@ -51,7 +50,6 @@
 
 <script type='text/javascript'>
 	function load_customers(customers) {
-		console.log(customers);
 		$.each(customers, function(index) {
 				customer = customers[index];
 				address = JSON.stringify(customer);

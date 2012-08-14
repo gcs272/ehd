@@ -2,17 +2,13 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>Postback</title>
-		<meta name="description" content="<span class="brand-header">Postback</span>" />
+		<meta name="description" content="Postback" />
 		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stylesheet.css') }}" />
 		<link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'/>
 		<style>
 			.brand-header {
 				font-family: 'Courgette', cursive;
-			}
-
-			#container-front {
-				margin-top: -40px;
 			}
 
 			footer .divider{ height: 38px;color: white;letter-spacing: .2em;padding-top: 15px;margin: 30px 0px 15px;text-align: center;}
@@ -22,19 +18,14 @@
 <body>
 
 	<div class="header">			
-
 		<div style="width:960px;margin:auto">
-		
 			<div class="title-name">
-			<a href="{{url_for('index')}}"><span class="brand-header">Postback</span></a>
+				<a href="{{url_for('index')}}"><span class="brand-header">Postback</span></a>
 			</div>
-			
 			<p class="nav">
-			<a href="#">Made in NYC</a>
+				<a href="#">Made in NYC</a>
 			</p>
-
 		</div>
-
 	</div>
 	<div class="header-placeholder"></div>
 	{% block header %}{% endblock %}
@@ -44,15 +35,10 @@
 <footer>
 	<div class="clear"></div>
 	<div class="divider"></div>
-
-	
 	<div id="footer-copyright">
 		<ul>
 			<li><a href="#">Follow us @</a></li>
-			<li><a href="#">Etsy</a></li>
-			<li><a href="#">Twitter</a></li>
-			<li><a href="#">Pinterest</a></li>
-			<li><a href="#">RSS</a></li>
+			<li><a href="http://twitter.com/postback">Twitter</a></li>
 		</ul>
 		<p>© <span class="brand-header">Postback</span> 2012</p>
 	</div>

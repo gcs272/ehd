@@ -103,7 +103,7 @@ def get_listing_images(listingid=None):
 ### Specifc routes for EHD
 @etsy.route('/customers')
 def get_customers():
-    return jsonify(get_shop_receipts())
+    return jsonify(get_all_receipts())
 
 @etsy.route('/images')
 def get_images():
