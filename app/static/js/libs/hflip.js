@@ -9,7 +9,6 @@ $("#reflection2").stop().css({width:'0px',height:''+height+'px',marginLeft:''+ma
 		var self = this;
 		window.setTimeout(function() {
 			//$(self).stop().animate({width:''+width+'px',height:''+height+'px',marginLeft:'0px',opacity:'1'},{duration:250});
-			console.log($(self).parent().find('.image2'))
 			$(self).parent().find('.image2').animate({width:''+width+'px',height:''+height+'px',opacity:'1'},{duration:250});
 		},500);
 	});

@@ -122,7 +122,7 @@
 			<div id="front-content-bottom-color">	
 				<div class="headline">
 					<h1>Create Your Card</h1>
-					<p>Choose a layout and click to drag and drop your photos onto the card.</p>
+					<p>Choose a layout to preview your card.</p>
 				</div>
 			</div>
 		</div>
@@ -148,10 +148,10 @@
 				
 				<div class="left-background">
 					<h3>Background</h3>
-					<div class="background-swatch">
+					<div class="background-swatch" data-color='black'>
 						<div class="background-color black"></div>
 					</div>
-					<div class="background-swatch">
+					<div class="background-swatch" data-color='white'>
 						<div class="background-color white"></div>
 					</div>
 				</div>
@@ -215,24 +215,20 @@
 					generate_preview();
 				});
 
-				/* $('.background-swatch').click(function() {
-					$('.layout-tile.active').removeClass('active');
-					$(this).addClass('active')
+				$('.background-swatch').click(function() {
+					$('.background-swatch').removeClass('active');
+					$(this).addClass('active');
 					generate_preview();
 				});
-				$(".layout-tile").click(function(){
-					$(".layout-tile.active").removeClass('active');
-					$(this).addClass('active')
+
+				$('.banner-place').click(function() {
+					if ($('#banner-hide').is(':checked')) return;
+					$('.banner-place').removeClass('active');
+					$(this).addClass('active');
 					generate_preview();
-				})
+				});
 
-				$(".background-swatch").click(function(){
-					$(".background-swatch.active").removeClass('active');
-					$(this).addClass('active')
-					var color = $(this).find('.background-color').css("background-color")
-					$(".preview-padding").css('background', color)
-				})
-
+				/*
 				$(".banner-place").click(function(){
 					if($("#banner-hide").is(':checked')) return;
 					$(".banner-place.active").removeClass('active');
@@ -247,10 +243,7 @@
 						$(".banner-place").removeClass('active')
 					}
 				})
-
-				$(".slider-img").on('click', function(e) {
-					e.preventDefault();
-				})*/
+				*/
 
 				$("#banner-hide").on('change', function(e){
 					if( $("#banner-hide").is(':checked') ) {
@@ -293,22 +286,6 @@
 						}
 					}
 
-					$(".drop-region").droppable({
-						drop: function(e, ui) {
-							(e)
-							var img = ui.draggable.find('img').clone()
-							img.css({
-								'width': $(this).width(),
-								'height': $(this).height()
-							})
-							
-							$(this).html(img)
-							image_dropped();
-							return false;
-						}
-					})
-						
-					
 				}
 
 				function generate_preview() {
@@ -326,24 +303,12 @@
 					var layout = $(".layout-tile.active").data('dimensions')
 					layout = {x: layout, y: layout};
 					
-					var bgColor = $(".background-swatch.active").find('.background-color').css('background-color')
-
-					console.log('images: ');
-					console.log(images);
+					var bgColor = $(".background-swatch.active").data('color');
 
 					var avatarSrc = images.avatar;
 					var bannerSrc = images.banner;
 					var bannerPlacement = $(".banner-place.active").data('banner');
 					var imgs = images.images;
-
-					/* for( var i = 0; i < imgs.length; i++ ) {
-						console.log(imgs[i]);
-						var im = $(imgs[i]).find('img');
-						imgArr.push({
-							src: ( im ? im.attr('src') : null ),
-							position: $(imgs[i]).data('position')
-						})
-					} */
 
 					var image_list = [];
 					max_length = (layout.x * layout.y > imgs.length) ?
@@ -351,9 +316,6 @@
 					for (var i = 0; i < imgs.length; i++) {
 						image_list.push(imgs[i]);
 					}
-
-					console.log(imgs);
-					console.log(image_list);
 
 					var payload = {
 						layout_x: layout['x'],
@@ -379,15 +341,8 @@
 					success: function(resp) {
 						
 						images = resp;
-						var html = "";
-						for( var i = 0; i < images.images.length; i++ ) {
-							html += "<div class='slider-img'><img src='"+images.images[i]+"'></img></div>";
-						}
-						$(".preview-slider").html(html)
-						$(".slider-img").draggable({revert: "valid"})
-						$(".layout-tile:first").trigger('click');
-						$(".background-swatch:first").trigger('click')
-						$(".banner-place:last").trigger('click')
+						$('.background-swatch .white').addClass('active');
+						$('#banner-bottom-placeholder').addClass('active');
 						generate_preview();
 					}
 				})
