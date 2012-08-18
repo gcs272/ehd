@@ -28,7 +28,7 @@ def create_postcard():
         return render_template('create_postcard.html')
     else:
         ## redirect to sorry page? verify again?
-        flash('Sorry! We were unable to connect to Etsy, please try again!');
+        flash(u'Sorry! We were unable to connect to Etsy, please try again!');
         return redirect(url_for('index'));
 
 @main.route('/recipients')
@@ -146,5 +146,5 @@ def put_session(id, data):
     fp.close()
 
 def card_required():
-    flash("Try generating a card first!")
+    flash(u"Try generating a card first!")
     return redirect(url_for('create_postcard'))
