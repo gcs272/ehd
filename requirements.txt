@@ -3,4 +3,5 @@ Flask-OAuth
 Flask-Script
 pil
 requests
---index-url https://code.stripe.com --upgrade stripe
+-i https://code.stripe.com
+stripe
