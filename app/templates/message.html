@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block head %}
+<style type='text/css'>
+	.main {
+		width: 960px;
+		margin: auto;
+		padding-top: 48px;
+	}
+
+	.controls, .display {
+		display: inline-block;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div id="container-front">
+	<div class="template-content-header">
+		<div id="front-content-bottom-color">	
+			<div class="headline">
+				<h1>Add a Message</h1>
+				<p>Add a personalized note to the back of the card.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="main">
+	<div class="controls">
+		<div class="control control-font">
+			<h3>Font</h3>
+		</div>
+		<div class="control control-size">
+			<h3>Size</h3>
+		</div>
+		<div class="control control-color">
+			<h3>Color</h3>
+		</div>
+	</div>
+	<div class="display">
+		<div class="postcard-container">
+			<div class="postcard-front">
+				<div class="postcard-front-image"></div>
+			</div>
+			<div class="postcard-back">
+				<div class="postcard-back-left">
+				</div>
+				<div class="postcard-back-right">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id='submit-btn-content' style='float: right'>
+	<form id='recipients-form' action='/recipients' method='post'>
+		<button type='submit' id='submit-button'>
+			<b>Enter Payment Details</b>
+		</button>
+	</form>
+</div>
+
+{% endblock %}

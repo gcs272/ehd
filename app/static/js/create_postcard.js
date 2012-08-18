@@ -58,7 +58,7 @@
       max_length = layout.x * layout.y > imgs.length ? imgs.length : layout.x * layout.y;
       for (_i = 0, _len = imgs.length; _i < _len; _i++) {
         i = imgs[_i];
-        image_list.push(imgs[i]);
+        image_list.push(i);
       }
       payload = {
         layout_x: layout['x'],

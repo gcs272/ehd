@@ -31,6 +31,13 @@ def create_postcard():
         flash(u'Sorry! We were unable to connect to Etsy, please try again!');
         return redirect(url_for('index'));
 
+@main.route('/message')
+def add_message():
+    if session.get('card_id') is not None:
+        return render_template('message.html')
+    else:
+        return card_required()
+
 @main.route('/recipients')
 def add_recipients():
     if session.get('card_id') is not None:
@@ -73,6 +80,7 @@ def checkout():
 @main.route('/image/generate', methods=['POST'])
 def generate():
     # Grab the list of urls being posted and start downloading them
+    print request.form
     card = Postcard()
     grid_x = int(request.form.get('layout_x'))
     grid_y = int(request.form.get('layout_y'))
@@ -81,22 +89,26 @@ def generate():
     card.set_background(request.form.get('background'))
    
     urls = json.loads(request.form.get('images'))
-    # DEBUG: add junk data to fill up a 3x3 grid
-    urls += urls
-    urls += urls
-    
+
     # Shorten to just what we actually need
     urls = urls[0:grid_x*grid_y]
 
+    img_count = 0
     for url in urls:
-        card.add_image(download_image(url))
+        if url is not None:
+            card.add_image(download_image(url))
+            img_count += 1
+
+    if img_count < grid_x*grid_y:
+        flash(u'There was an error retrieving the images from Etsy')
+        return jsonify({'preview': 'sorry.jpeg'})
 
     card.generate_grid((grid_x, grid_y))
 
     banner = json.loads(request.form.get('banner'))
     if banner['showBanner']:
         path = download_image(banner['src'])
-        card.place_banner(path, banner['placement'])
+        card.place_banner(path, banner.get('placement'))
 
     id = str(uuid.uuid4())
     outpath = '/tmp/%s.jpg' % (id)

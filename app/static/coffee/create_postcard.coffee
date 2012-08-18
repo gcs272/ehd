@@ -51,7 +51,7 @@ $(document).ready ->
 
 		max_length = if (layout.x * layout.y > imgs.length) then imgs.length else layout.x * layout.y;
 
-		image_list.push imgs[i] for i in imgs
+		image_list.push i for i in imgs
 
 		payload =
 			layout_x: layout['x'],
