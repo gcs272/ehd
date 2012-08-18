@@ -24,11 +24,20 @@ def index():
 
 @main.route('/create')
 def create_postcard():
-	return render_template('create_postcard.html')
+    if session.get('etsy_token') is not None:
+        return render_template('create_postcard.html')
+    else:
+        ## redirect to sorry page? verify again?
+        flash('Sorry! We were unable to connect to Etsy, please try again!');
+        return redirect(url_for('index'));
 
 @main.route('/recipients')
 def add_recipients():
-    return render_template('recipients.html')
+    if session.get('card_id') is not None:
+        return render_template('recipients.html')
+    else:
+        flash("Try generating a card first!")
+        return redirect(url_for('create_postcard'))
 
 @main.route('/checkout', methods=['POST'])
 def checkout_form():
@@ -52,7 +61,7 @@ def checkout():
                 card=token,
                 description=session.get('user-email'))
             return redirect(url_for('hooray'))
-
+    #detect if they've generated a card and transaction?
     return render_template('checkout.html')
 
 @main.route('/image/generate', methods=['POST'])
@@ -87,6 +96,7 @@ def generate():
     outpath = '/tmp/%s.jpg' % (id)
     card.canvas.save(outpath)
     session['card_path'] = outpath
+    session['card_id'] = id
 
     preview_path = '/tmp/%s-preview.jpg' % (id)
     card.quarter().save(preview_path)
@@ -101,6 +111,7 @@ def preview():
 
 @main.route('/hooray', methods=['POST'])
 def hooray():
+    ## Should we clear the postcard info from session?
     return render_template('hooray.html')
 
 def download_image(url):
