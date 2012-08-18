@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask, redirect, url_for, session, request, g,\
-        render_template, jsonify, make_response
+        render_template, jsonify, make_response, flash
 
 from lib.postcard import Postcard
 
@@ -36,8 +36,7 @@ def add_recipients():
     if session.get('card_id') is not None:
         return render_template('recipients.html')
     else:
-        flash("Try generating a card first!")
-        return redirect(url_for('create_postcard'))
+        return card_required()
 
 @main.route('/checkout', methods=['POST'])
 def checkout_form():
@@ -49,6 +48,9 @@ def checkout_form():
 
 @main.route('/checkout', methods=['GET', 'POST'])
 def checkout():
+    if session.get('card_id') is None:
+        return card_required()
+
     if request.method == 'POST':
         if 'stripeToken' in request.form:
             amount = int(session.get('number_of_cards', 1)) * 150
@@ -60,6 +62,10 @@ def checkout():
                 currency = 'usd',
                 card=token,
                 description=session.get('user-email'))
+
+            ## change later, if we're storing transaction info or something..
+            session['transaction_id'] = 1337
+
             return redirect(url_for('hooray'))
     #detect if they've generated a card and transaction?
     return render_template('checkout.html')
@@ -111,6 +117,12 @@ def preview():
 
 @main.route('/hooray', methods=['POST'])
 def hooray():
+    if session.get('card_id') is None:
+        return card_required();
+
+    if session.get('transaction_id') is None:
+        flash(u'Whoops! Looks like you forgot to checkout.')
+        return redirect(url_for('checkout'))
     ## Should we clear the postcard info from session?
     return render_template('hooray.html')
 
@@ -132,3 +144,7 @@ def put_session(id, data):
     fp = open('/tmp/%s.json' % (id), 'wb')
     fp.write(json.dumps(data))
     fp.close()
+
+def card_required():
+    flash("Try generating a card first!")
+    return redirect(url_for('create_postcard'))

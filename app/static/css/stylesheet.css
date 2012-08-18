@@ -2706,3 +2706,20 @@ footer h1{font-size: 25px;font-weight: bold;}
 .order_num p{float:left;margin:10px 0;width: 350px; font-size: 20px;}
 .postcard-info-padding label{margin: 13px 15px !important;}
 .postcard-info-padding input{font-size:15px;}
+
+
+.flashes {
+	position: fixed;
+	bottom: 0px;
+	padding: 10px;
+	left: 25%;
+	right: 25%;
+	background: #FA5559;
+	color: white;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.message {
+	text-align: center;
+}
