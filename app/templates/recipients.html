@@ -7,11 +7,10 @@
 		padding-top: 48px;
 	}
 
-	.message-container {
-		margin: auto; 
-		width: 960px;
-		padding: 16px 0px;
+		#container-front {
+		margin-top: 100px;
 	}
+
 
 	.users-container input {
 		width: auto;
@@ -28,11 +27,17 @@
 </style>
 {% endblock %}
 {% block content %}
-<div class='main'>
-	<div class='message-container'>
-		<h3>Add Message</h3>
-		<textarea id='message' rows=4 cols=60 placeholder='Your message'></textarea>
+<div id="container-front">
+	<div class="template-content-header">
+		<div id="front-content-bottom-color">	
+			<div class="headline">
+				<h1>Select Recipients</h1>
+				<p>Choose from your list of Etsy customers.</p>
+			</div>
+		</div>
 	</div>
+</div>
+<div class='main'>
 	<div class='users-container'>
 		<h3>Your Recent Customers</h3>
 		<ul id='users'>
@@ -85,12 +90,6 @@
 				input.name = 'addresses';
 				input.value = JSON.stringify(addresses);
 				$('#recipients-form').append(input);
-
-				minput = document.createElement('input');
-				minput.type = 'hidden';
-				minput.name = 'message';
-				minput.value = $('#message').val();
-				$('#recipients-form').append(minput);
 			});
 	});
 </script>
