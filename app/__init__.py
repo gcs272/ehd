@@ -34,24 +34,23 @@ def create_postcard():
 @main.route('/message')
 def add_message():
     if session.get('card_id') is not None:
-        return render_template('message.html')
+        return render_template('message.html', banner=session.get('banner'), avatar=session.get('avatar'))
     else:
         return card_required()
 
-@main.route('/recipients')
+@main.route('/recipients', methods=['POST'])
 def add_recipients():
     if session.get('card_id') is not None:
+        session['message'] = request.form.get('message')
         return render_template('recipients.html')
     else:
         return card_required()
 
 @main.route('/checkout', methods=['POST'])
 def checkout_form():
-    addresses = json.loads(request.form.get('addresses'))
-    message = request.form.get('message')
-
-    return render_template('checkout.html', addresses=addresses, 
-            message=message, total_cost = 1.99 * len(addresses))
+    #addresses = json.loads(request.form.get('addresses'))
+    return render_template('checkout.html', 
+            message=session.get('message'), postcard=session.get('card_path'), banner=session.get('banner'), avatar=session.get('avatar'), total_cost = 1.99)
 
 @main.route('/checkout', methods=['GET', 'POST'])
 def checkout():
@@ -80,7 +79,6 @@ def checkout():
 @main.route('/image/generate', methods=['POST'])
 def generate():
     # Grab the list of urls being posted and start downloading them
-    print request.form
     card = Postcard()
     grid_x = int(request.form.get('layout_x'))
     grid_y = int(request.form.get('layout_y'))
@@ -106,6 +104,12 @@ def generate():
     card.generate_grid((grid_x, grid_y))
 
     banner = json.loads(request.form.get('banner'))
+    avatar = request.form.get('avatar')
+
+    session['banner'] = banner.get('src')
+    session['avatar'] = avatar
+    print avatar
+
     if banner['showBanner']:
         path = download_image(banner['src'])
         card.place_banner(path, banner.get('placement'))
